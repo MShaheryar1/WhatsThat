@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 function ContactScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Contacts screen</Text>
+      <Text style={styles.title}>Contacts screen page</Text>
     </View>
   );
 }
