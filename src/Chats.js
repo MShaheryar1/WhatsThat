@@ -34,7 +34,10 @@ function ProfileScreen({ handleLogout }) {
     </View>
   );
 }
-
+// The functions below check if the user has logged in using token, if the token
+//is found, it is set using settoken function otherwise null
+//if the token state is null, login is rendered passing settoken function.
+//if token state is not null, user has logged in, chat component is rendered
 function Chats({ navigation }) {
   const [token, setToken] = useState(null);
 
