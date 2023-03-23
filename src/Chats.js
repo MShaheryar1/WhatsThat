@@ -25,19 +25,13 @@ function ChatsScreen() {
   );
 }
 
-function ProfileScreen({ handleLogout }) {
-  const onPressLogout =async()=>{
-    try{ 
-      await handleLogout(); 
-    } catch(error){
-      console.log(error);
-    }
-  };
+function ProfileScreen({props}) {
+  const handleLogout = props.handleLogout;
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile Screen</Text>
 
-      <TouchableOpacity onPress={onPressLogout} style={styles.button}>
+      <TouchableOpacity onPress={handleLogout} style={styles.button}>
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
     </View>
@@ -72,7 +66,7 @@ function Chats({ navigation }) {
       setToken(null);
       navigation.navigate('Home');
     } catch (error) {
-      console.log(error); //hi how are yous
+      console.log(error);
     }
   };
 
@@ -89,7 +83,7 @@ function Chats({ navigation }) {
           let iconName;
 
           if (route.name === 'ContactScreen') {
-            iconName = focused ? '' : '';
+            iconName = focused ? 'Contacts' : 'person-circle-outline';
           } else if (route.name === 'ChatsScreen') {
             iconName = focused ? 'chatbubble' : 'chatbubble-outline';
           } else if (route.name === 'Profile') {
@@ -103,6 +97,19 @@ function Chats({ navigation }) {
         tabBarInactiveTintColor: 'gray',
       })}
     >
+
+
+<Tab.Screen 
+  name="Profile" 
+  component={ProfileScreen}
+  options={{ 
+    tabBarLabel: 'Profile',
+    tabBarIcon: ({ color, size }) => (
+      <MaterialCommunityIcons name="account-circle" color={color} size={size} />
+    ),
+  }}
+  handleLogout= {handleLogout }
+/>
   <Tab.Screen name="ChatsScreen" component={ChatsScreen}  
   options={{
     tabBarLabel: 'Chats',
@@ -119,17 +126,6 @@ function Chats({ navigation }) {
     ),
   }}
  />
- <Tab.Screen 
-  name="Profile" 
-  component={ProfileScreen}
-  options={{ 
-    tabBarLabel: 'Profile',
-    tabBarIcon: ({ color, size }) => (
-      <MaterialCommunityIcons name="account-circle" color={color} size={size} />
-    ),
-  }}
-  initialParams={{ handleLogout: handleLogout }}
-/>
 </Tab.Navigator>
 
   );
