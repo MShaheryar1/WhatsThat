@@ -26,11 +26,18 @@ function ChatsScreen() {
 }
 
 function ProfileScreen({ handleLogout }) {
+  const onPressLogout =async()=>{
+    try{ 
+      await handleLogout(); 
+    } catch(error){
+      console.log(error);
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile Screen</Text>
 
-      <TouchableOpacity onPress={handleLogout} style={styles.button}>
+      <TouchableOpacity onPress={onPressLogout} style={styles.button}>
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
     </View>
@@ -65,7 +72,7 @@ function Chats({ navigation }) {
       setToken(null);
       navigation.navigate('Home');
     } catch (error) {
-      console.log(error); //hi
+      console.log(error); //hi how are yous
     }
   };
 
