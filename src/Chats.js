@@ -65,7 +65,7 @@ function Chats({ navigation }) {
       setToken(null);
       navigation.navigate('Home');
     } catch (error) {
-      console.log(error);
+      console.log(error); //hi
     }
   };
 
