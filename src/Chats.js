@@ -24,7 +24,8 @@ function ChatsScreen() {
   );
 }
 
-function ProfileScreen({ handleLogout }) {
+function ProfileScreen({ route }) {
+  const handleLogout = route.params.handleLogout;
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile Screen</Text>
@@ -83,12 +84,16 @@ function Chats({ navigation }) {
     >
 
 
-      <Tab.Screen name="Profile"
-        component={ProfileScreen}
-      >
-        {(props) => <ProfileScreen {...props} handleLogout={handleLogout} />}
-        <MaterialCommunityIcons name="person-circle"/>
-      </Tab.Screen>
+<Tab.Screen name="ProfileScreen" component={ProfileScreen}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="person" color={color} size={size} />
+          ),
+        }}
+        initialParams={{ handleLogout: handleLogout }}
+        
+      />
       <Tab.Screen name="ChatsScreen" component={ChatsScreen}
         options={{
           tabBarLabel: 'Chats',
