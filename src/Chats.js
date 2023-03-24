@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Login from './Login';
 
 const Tab = createBottomTabNavigator();
@@ -25,8 +24,7 @@ function ChatsScreen() {
   );
 }
 
-function ProfileScreen({props}) {
-  const handleLogout = props.handleLogout;
+function ProfileScreen({ handleLogout }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile Screen</Text>
@@ -79,54 +77,35 @@ function Chats({ navigation }) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
 
-          if (route.name === 'ContactScreen') {
-            iconName = focused ? 'Contacts' : 'person-circle-outline';
-          } else if (route.name === 'ChatsScreen') {
-            iconName = focused ? 'chatbubble' : 'chatbubble-outline';
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'person' : 'person-outline';
-          }
 
-          // You can return any component that you like here!
-          return <Icon name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: 'tomato',
-        tabBarInactiveTintColor: 'gray',
       })}
     >
 
 
-<Tab.Screen 
-  name="Profile" 
-  component={ProfileScreen}
-  options={{ 
-    tabBarLabel: 'Profile',
-    tabBarIcon: ({ color, size }) => (
-      <MaterialCommunityIcons name="account-circle" color={color} size={size} />
-    ),
-  }}
-  handleLogout= {handleLogout }
-/>
-  <Tab.Screen name="ChatsScreen" component={ChatsScreen}  
-  options={{
-    tabBarLabel: 'Chats',
-    tabBarIcon: ({ color, size }) => (
-      <MaterialCommunityIcons name="chat" color={color} size={size} />
-    ),
-  }}
-  />
-  <Tab.Screen name="ContactsScreen" component={ContactScreen}
-   options={{
-    tabBarLabel: 'contacts',
-    tabBarIcon: ({ color, size }) => (
-      <MaterialCommunityIcons name="Contacts" color={color} size={size} />
-    ),
-  }}
- />
-</Tab.Navigator>
+      <Tab.Screen name="Profile"
+        component={ProfileScreen}
+      >
+        {(props) => <ProfileScreen {...props} handleLogout={handleLogout} />}
+        <MaterialCommunityIcons name="person-circle"/>
+      </Tab.Screen>
+      <Tab.Screen name="ChatsScreen" component={ChatsScreen}
+        options={{
+          tabBarLabel: 'Chats',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="chat" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen name="ContactsScreen" component={ContactScreen}
+        options={{
+          tabBarLabel: 'contacts',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="contacts" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
 
   );
 }
