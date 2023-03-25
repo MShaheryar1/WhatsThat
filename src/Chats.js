@@ -27,7 +27,7 @@ function ProfileScreen({ route }) {
   const handleLogout = route.params.handleLogout;
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile </Text>
+      <Text style={styles.profile}>Your Profile </Text>
 
       <TouchableOpacity onPress={handleLogout} style={styles.button}>
         <Text style={styles.buttonText}>Logout</Text>
@@ -60,13 +60,31 @@ function Chats({ navigation }) {
 
   const handleLogout = async () => {
     try {
-      await AsyncStorage.removeItem('@token');
-      setToken(null);
-      navigation.navigate('Home');
+      const token = await AsyncStorage.getItem('@token');
+  
+      const response = await fetch('http://localhost:3333/api/1.0.0/logout', {
+        method: 'POST',
+        headers: {
+          'X-Authorization': token,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        // Logout was successful, remove token from async storage
+        await AsyncStorage.removeItem('@token');
+        setToken(null);
+        navigation.navigate('Home');
+      } else {
+        // Logout failed, log error message
+        console.log('Logout failed');
+      }
     } catch (error) {
       console.log(error);
     }
   };
+  
+  
 
   if (!token) {
     // Render Login component if user has not logged in yet
@@ -133,6 +151,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
+  profile:{
+ fontSize:16,
+ paddingBottom:20,
+  },
+  
 });
 
 export default Chats;
