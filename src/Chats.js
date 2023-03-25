@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Login from './Login';
 
 const Tab = createBottomTabNavigator();
@@ -19,7 +18,7 @@ function ContactScreen() {
 function ChatsScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Chat Screen</Text>
+      <Text style={styles.title}>Chats</Text>
     </View>
   );
 }
@@ -28,7 +27,7 @@ function ProfileScreen({ route }) {
   const handleLogout = route.params.handleLogout;
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile Screen</Text>
+      <Text style={styles.title}>Profile </Text>
 
       <TouchableOpacity onPress={handleLogout} style={styles.button}>
         <Text style={styles.buttonText}>Logout</Text>
@@ -85,17 +84,17 @@ function Chats({ navigation }) {
 
 
 <Tab.Screen name="ProfileScreen" component={ProfileScreen}
-        options={{
+        options={{headerShown:false,
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="person" color={color} size={size} />
+            <MaterialCommunityIcons name="account-circle" color={color} size={size} />
           ),
         }}
         initialParams={{ handleLogout: handleLogout }}
         
       />
       <Tab.Screen name="ChatsScreen" component={ChatsScreen}
-        options={{
+        options={{headerShown:false,
           tabBarLabel: 'Chats',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="chat" color={color} size={size} />
@@ -103,7 +102,7 @@ function Chats({ navigation }) {
         }}
       />
       <Tab.Screen name="ContactsScreen" component={ContactScreen}
-        options={{
+        options={{ headerShown:false,
           tabBarLabel: 'contacts',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="contacts" color={color} size={size} />
