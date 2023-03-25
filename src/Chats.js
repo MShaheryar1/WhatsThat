@@ -77,8 +77,6 @@ function Chats({ navigation }) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-
-
       })}
     >
 
