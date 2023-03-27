@@ -64,7 +64,7 @@ function Chats({ navigation }) {
       <Tab.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{
+        options={{ headerShown:false,
           tabBarLabel: 'Profile',
           tabBarIcon: ({ size }) => (
             <MaterialCommunityIcons name="account-circle" color="green" size={size} />
@@ -75,7 +75,7 @@ function Chats({ navigation }) {
       <Tab.Screen
         name="ChatsScreen"
         component={ChatsScreen}
-        options={{
+        options={{ headerShown:false,
           tabBarLabel: 'Chats',
           tabBarIcon: ({ size }) => (
             <MaterialCommunityIcons name="chat" color="green" size={size} />

@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
+
 function ProfileScreen({ route }) {
+    
   const handleLogout = route.params.handleLogout;
   
   return (
