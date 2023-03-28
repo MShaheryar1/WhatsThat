@@ -8,7 +8,7 @@ import ChatsScreen from './chatsscreen';
 import ContactScreen from './contactscreen';
 import ProfileScreen from './profilescreen';
 const Tab = createBottomTabNavigator();
-function Chats({ navigation }) {
+function main({ navigation }) {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
@@ -94,4 +94,4 @@ function Chats({ navigation }) {
 
   );
 }
-export default Chats;
+export default main;

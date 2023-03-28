@@ -9,7 +9,7 @@ import {
   View,
   Image,
   TextInput,
-  Button,
+  
   TouchableOpacity,
 } from "react-native";
 
@@ -36,7 +36,7 @@ export default function Login() {
       await AsyncStorage.setItem('@token', data.token);
       setToken(data.token);
       // Navigate to the Chats screen
-      navigation.navigate('Chats');
+      navigation.navigate('main');
     } catch (error) {
       console.error(error);
     }
