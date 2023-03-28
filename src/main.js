@@ -8,6 +8,29 @@ import ChatsScreen from './chatsscreen';
 import ContactScreen from './contactscreen';
 import ProfileScreen from './profilescreen';
 const Tab = createBottomTabNavigator();
+
+export async function getUserDetails (token, user_id)  {
+  try {
+    const response = await fetch('http://localhost:3333/api/1.0.0/user/{user_id}', {
+      method: 'GET',
+      headers: {
+        'X-Authorization': token, user_id,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      // data will contain the user's details, so you can set the state variables to these values
+    } else {
+      console.log('Error retrieving user details');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 function main({ navigation }) {
   const [token, setToken] = useState(null);
 
@@ -26,7 +49,7 @@ function main({ navigation }) {
 
     getToken();
   }, []);
-
+ 
   const handleLogout = async () => {
     try {
       const token = await AsyncStorage.getItem('@token');

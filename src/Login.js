@@ -36,7 +36,7 @@ export default function Login() {
       await AsyncStorage.setItem('@token', data.token);
       setToken(data.token);
       // Navigate to the Chats screen
-      navigation.navigate('main');
+      navigation.navigate('Main');
     } catch (error) {
       console.error(error);
     }
