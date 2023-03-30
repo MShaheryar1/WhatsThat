@@ -9,7 +9,7 @@ import ContactScreen from './contactscreen';
 import ProfileScreen from './profilescreen';
 const Tab = createBottomTabNavigator();
 
-export async function getUserDetails (token, user_id)  {
+export async function getUserDetails(token, user_id) {
   try {
     const response = await fetch('http://localhost:3333/api/1.0.0/user/{user_id}', {
       method: 'GET',
@@ -30,56 +30,55 @@ export async function getUserDetails (token, user_id)  {
   }
 };
 
+    async function logout(){
+    console.log("Logout")
 
-function main({ navigation }) {
-  const [token, setToken] = useState(null);
-
-  useEffect(() => {
-    // Check if user has a token stored in async storage to stay logged in
-    const getToken = async () => {
-      try {
-        const value = await AsyncStorage.getItem('@token');
-        if (value !== null) {
-          setToken(value);
+    return fetch('http://localhost:3333/api/1.0.0/logout', {
+      method: 'POST',
+      headers: {
+        'X-Authorization': await AsyncStorage.getItem("whatsthat_session_token")
+      }
+    })
+      .then(async (response) => {
+        if (response.status === 200) {
+          await AsyncStorage.removeItem("whatsthat_session_token")
+          await AsyncStorage.removeItem("whatsthat_user_id")
+          this.props.navigation.navigate("Login")
+        } else if (response.status === 401) {
+          console.log("Unauthorised")
+          await AsyncStorage.removeItem("whatsthat_session_token")
+          await AsyncStorage.removeItem("whatsthat_user_id")
+          this.props.navigation.navigate("Login")
+        } else {
+          throw "Something went Wrong"
         }
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    getToken();
-  }, []);
- 
-  const handleLogout = async () => {
-    try {
-      const token = await AsyncStorage.getItem('@token');
-  
-      const response = await fetch('http://localhost:3333/api/1.0.0/logout', {
-        method: 'POST',
-        headers: {
-          'X-Authorization': token,
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (response.ok) {
-        // Logout was successful, remove token from async storage
-        await AsyncStorage.removeItem('@token');
-        setToken(null);
-        navigation.navigate('Home');
-      } else {
-        // Logout failed, log error message
-        console.log('Logout failed');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      })
+      .catch((error) => {
+        this.setState({ "error": error })
+        this.setState({ "submitted": false });
 
-  if (!token) {
-    // Render Login component if user has not logged in yet
-    return <Login setToken={setToken} />;
+      })
   }
+  function main({ }) {
+    const [ setToken] = useState(null);
+  
+    useEffect(() => {
+      // Check if user has a token stored in async storage to stay logged in
+      const getToken = async () => {
+        try {
+          const value = await AsyncStorage.getItem('@token');
+          if (value !== null) {
+            setToken(value);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      getToken();
+    },
+      []);
 
   // Render Chats component if user has logged in
   return (
@@ -87,18 +86,20 @@ function main({ navigation }) {
       <Tab.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerShown:false,
+        options={{
+          headerShown: false,
           tabBarLabel: 'Profile',
           tabBarIcon: ({ size }) => (
             <MaterialCommunityIcons name="account-circle" color="green" size={size} />
           ),
         }}
-        initialParams={{ handleLogout: handleLogout }}
+        initialParams={{ logout: logout }}
       />
       <Tab.Screen
         name="ChatsScreen"
         component={ChatsScreen}
-        options={{ headerShown:false,
+        options={{
+          headerShown: false,
           tabBarLabel: 'Chats',
           tabBarIcon: ({ size }) => (
             <MaterialCommunityIcons name="chat" color="green" size={size} />
@@ -106,10 +107,11 @@ function main({ navigation }) {
         }}
       />
       <Tab.Screen name="ContactsScreen" component={ContactScreen}
-        options={{ headerShown:false,
+        options={{
+          headerShown: false,
           tabBarLabel: 'Contacts',
           tabBarIcon: ({ size }) => (
-            <MaterialCommunityIcons name="contacts" color="green" size={size}/>
+            <MaterialCommunityIcons name="contacts" color="green" size={size} />
           ),
         }}
       />

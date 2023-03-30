@@ -12,97 +12,108 @@ import {
 
 } from "react-native";
 
+export class Signup extends React.Component {
+  constructor(props) {
+    super(props);
+    const navigation = useNavigation();
+    this.state = {
+      Singup:[],
+      isLoading: true,
+      first_name: '',
+      last_name: '',
+      email: '',
+      password: ''
+    };
+  }
 
-export default function Signup() {
-  const navigation = useNavigation();
-
-  const [first_name, setFirstName] = useState("first_name");
-  const [last_name, setLastName] = useState("last_name");
-  const [email, setEmail] = useState("email");
-  const [password, setPassword] = useState("password");
- 
-  const handleSignup = async () => {
+  async handleSignup() {
+    let to_send = {
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      email: this.state.email,
+      password: this.state.password
+    };
     try {
       const response = await fetch('http://localhost:3333/api/1.0.0/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ first_name, last_name, email, password }),
+        body: JSON.stringify(to_send)
       });
-
-      const data = await response.json();
-      navigation.navigate('Login');
-      console.log(data);
+      Alert.alert("Account Created");
+      this.getData();
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
-  };
+  }
 
-  return (
-    <View style={styles.container}>
-
-      <StatusBar style="auto" />
-      <Image
-        source={require('./assets/whatsthat.png')}
-        style={{ width: 200, height: 200, display: 'flex', marginLeft: 30, marginBottom: 30 }}
-      />
-
-      <View style={styles.inputView}>
-
-        <TextInput
-          style={styles.TextInput}
-          placeholder="First Name"
-          placeholderTextColor="#003f5c"
-          onChangeText={(first_name) => setFirstName(first_name)}
+  render() {
+    const { navigation } = this.props;
+    return (
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        <Image
+          source={require('./assets/whatsthat.png')}
+          style={{ width: 200, height: 200, display: 'flex', marginLeft: 30, marginBottom: 30 }}
         />
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="First Name"
+            placeholderTextColor="#003f5c"
+            onChangeText={(first_name) => this.setState({ first_name })}
+            value={this.state.first_name}
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Last Name"
+            placeholderTextColor="#003f5c"
+            onChangeText={(last_name) => this.setState({ last_name })}
+            value={this.state.last_name}
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Email"
+            placeholderTextColor="#003f5c"
+            onChangeText={(email) => this.setState({ email })}
+            value={this.state.email}
+          />
+       
 
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Last Name"
-          placeholderTextColor="#003f5c"
-          onChangeText={(last_name) => setLastName(last_name)}
-        />
-
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
-        />
-
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
-        />
-      </View>
-      <TouchableOpacity style={styles.signupbtn} onPress={handleSignup}>
-        <Text style={styles.signuptxt}>Sign Up</Text>
-      </TouchableOpacity>
-      <Text style={{
-        paddingTop: 10,
-        fontWeight: "bold",
-      }}>Already have an account? </Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Password"
+            placeholderTextColor="#003f5c"
+            secureTextEntry={true}
+            onChangeText={(password) => this.state({ password })}
+            value={this.State.password} />
+        </View>
+        <TouchableOpacity style={styles.signupbtn} onPress={handleSignup}>
+          <Text style={styles.signuptxt}>Sign Up</Text>
+        </TouchableOpacity>
         <Text style={{
           paddingTop: 10,
           fontWeight: "bold",
-        }}> Login here</Text>
-      </TouchableOpacity>
+        }}>Already have an account? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={{
+            paddingTop: 10,
+            fontWeight: "bold",
+          }}> Login here</Text>
+        </TouchableOpacity>
 
 
-    </View>
-  );
+      </View>
+    );
 
+  }
 }
 const styles = StyleSheet.create({
   container: {
@@ -154,3 +165,4 @@ const styles = StyleSheet.create({
   }
 
 });
+export default Signup;
