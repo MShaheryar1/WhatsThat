@@ -15,9 +15,7 @@ import {
 export class Signup extends React.Component {
   constructor(props) {
     super(props);
-    const navigation = useNavigation();
     this.state = {
-      Singup:[],
       isLoading: true,
       first_name: '',
       last_name: '',
@@ -92,10 +90,10 @@ export class Signup extends React.Component {
             placeholder="Password"
             placeholderTextColor="#003f5c"
             secureTextEntry={true}
-            onChangeText={(password) => this.state({ password })}
-            value={this.State.password} />
+            onChangeText={(password) => this.setState({ password })}
+            value={this.state.password} />
         </View>
-        <TouchableOpacity style={styles.signupbtn} onPress={handleSignup}>
+        <TouchableOpacity style={styles.signupbtn} onPress={() => this.handleSignup()}>
           <Text style={styles.signuptxt}>Sign Up</Text>
         </TouchableOpacity>
         <Text style={{

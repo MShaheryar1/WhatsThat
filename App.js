@@ -6,7 +6,6 @@ import Login from'./src/Login';
 import Signup from './src/Signup';
 import Main from './src/Main';
 
-
 const Stack = createNativeStackNavigator();
 
 function App() {
