@@ -34,6 +34,7 @@ export default function Login() {
       console.log(data);
       // Save the token in local storage
       await AsyncStorage.setItem('@token', data.token);
+      await AsyncStorage.setItem('@id', data.id);
       setToken(data.token);
       // Navigate to the Chats screen
       navigation.navigate('main');

@@ -42,6 +42,7 @@ function main({ navigation }) {
       if (response.ok) {
         // Logout was successful, remove token from async storage
         await AsyncStorage.removeItem('@token');
+        await AsyncStorage.removeItem('@id');
         setToken(null);
         navigation.navigate('Home');
       } else {
