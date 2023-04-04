@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function UserDetails ({ id,Token }) {
+function UserDetails ({ id, token, navigation }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const token = await AsyncStorage.getItem('@token');
+        const id = await AsyncStorage.getItem('@id');
 
-        const response = await fetch(`http://localhost:3333/api/1.0.0/user/${user_id}`, {
+        const response = await fetch(`http://localhost:3333/api/1.0.0/user/${id}`, {
             method:'GET',
           headers: {
             "X-Authorization":  token,
@@ -20,27 +22,33 @@ function UserDetails ({ id,Token }) {
         const data = await response.json();
         setUser(data);
       } catch (error) {
-        console.error("error");
+        console.error(error);
       }
     };
     fetchUser();
-  }, [id, Token]);
+  }, [token]);
 
   if (!user) {
-    return <Text>Loading...</Text>;
+    return <Text style={styles.error}>401 Unauthorised...</Text>;
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>User Details</Text>
+      <Text style={styles.title}>Account Details</Text>
       <Text style={styles.label}>ID:</Text>
-      <TextInput style={styles.input} value={user.id.toString()} />
+      {user.user_id && <TextInput style={styles.input} value={user.user_id.toString()} editable={false} />}
       <Text style={styles.label}>First Name:</Text>
-      <TextInput style={styles.input} value={user.first_name} />
+      {user.first_name && <TextInput style={styles.input} value={user.first_name} editable={false} />}
       <Text style={styles.label}>Last Name:</Text>
-      <TextInput style={styles.input} value={user.last_name} />
+      {user.last_name && <TextInput style={styles.input} value={user.last_name} editable={false} />}
       <Text style={styles.label}>Email:</Text>
-      <TextInput style={styles.input} value={user.email} />
+      {user.email && <TextInput style={styles.input} value={user.email} editable={false} />}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.buttonText}>Back</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -50,7 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#808000',
   },
   title: {
     fontSize: 24,
@@ -69,9 +77,26 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
-    margin: 10,
+    margin:10,
     width: 250,
     fontSize: 16,
+  },
+  error:{
+    fontSize:16,
+    color:'red',
+  },
+  button: {
+    backgroundColor: 'white',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 20,
+    color: "green"
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

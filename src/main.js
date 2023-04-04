@@ -7,7 +7,6 @@ import Login from './Login';
 import ChatsScreen from './chatsscreen';
 import ContactScreen from './contactscreen';
 import ProfileScreen from './profilescreen';
-import UserDetails from './UserDetails';
 const Tab = createBottomTabNavigator();
 function Main({ navigation }) {
   const [token, setToken] = useState(null);
@@ -60,24 +59,28 @@ function Main({ navigation }) {
     return <Login setToken={setToken} />;
   }
 
-  // Render Chats component if user has logged in
   return (
     <Tab.Navigator>
       <Tab.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerShown:false,
+        options={({ navigation }) => ({
+          headerShown: false,
           tabBarLabel: 'Profile',
           tabBarIcon: ({ size }) => (
             <MaterialCommunityIcons name="account-circle" color="green" size={size} />
           ),
-        }}
-        initialParams={{ handleLogout: handleLogout }}
+          headerRight: () => (
+            <TouchableOpacity onPress={handleLogout}>
+              <Text style={styles.logoutButton}>Logout</Text>
+            </TouchableOpacity>
+          ),
+        })}
       />
       <Tab.Screen
         name="ChatsScreen"
         component={ChatsScreen}
-        options={{ headerShown:false,
+        options={{ headerShown: false,
           tabBarLabel: 'Chats',
           tabBarIcon: ({ size }) => (
             <MaterialCommunityIcons name="chat" color="green" size={size} />
@@ -85,15 +88,15 @@ function Main({ navigation }) {
         }}
       />
       <Tab.Screen name="ContactsScreen" component={ContactScreen}
-        options={{ headerShown:false,
+        options={{ headerShown: false,
           tabBarLabel: 'Contacts',
           tabBarIcon: ({ size }) => (
-            <MaterialCommunityIcons name="contacts" color="green" size={size}/>
+            <MaterialCommunityIcons name="contacts"  color="green" size={size}/>
           ),
         }}
       />
     </Tab.Navigator>
-
   );
 }
+
 export default Main;

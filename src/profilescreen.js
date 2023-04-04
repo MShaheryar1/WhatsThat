@@ -3,22 +3,25 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import UserDetails from './UserDetails';
 
-function ProfileScreen({ route }) {
-  const handleLogout = route.params.handleLogout;
+
+function ProfileScreen({}) {
   const navigation = useNavigation();
 
   const handleUserDetails = () => {
     navigation.navigate('UserDetails');
   };
+  const handleLogout=()=>{
+    
+  }
   
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile</Text>
+<Text style={styles.title}>Profile</Text>
+      <TouchableOpacity style={styles.button} onPress={handleUserDetails}>
+        <Text style={styles.buttonText}>User Details</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Logout</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.user} onPress={handleUserDetails}>
-        <Text>User Details</Text>
       </TouchableOpacity>
     </View>
   );
@@ -29,25 +32,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#808000',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    
   },
   button: {
-    backgroundColor: '#1c1c1e',
+    backgroundColor: 'white',
     padding: 10,
     borderRadius: 5,
+    paddingTop:10,
+    marginVertical:50,
   },
   buttonText: {
-    color: '#fff',
+    color: '#black',
     fontSize: 16,
+    fontWeight: 'bold',
+    fontFamily:'serif',
   },
-  user: {
-    paddingTop: 30,
-  },
+  
 });
 
 export default ProfileScreen;
