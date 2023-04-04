@@ -7,8 +7,9 @@ import Login from './Login';
 import ChatsScreen from './chatsscreen';
 import ContactScreen from './contactscreen';
 import ProfileScreen from './profilescreen';
+import UserDetails from './UserDetails';
 const Tab = createBottomTabNavigator();
-function main({ navigation }) {
+function Main({ navigation }) {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
@@ -95,4 +96,4 @@ function main({ navigation }) {
 
   );
 }
-export default main;
+export default Main;

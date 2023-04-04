@@ -1,16 +1,24 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-
+import { useNavigation } from "@react-navigation/native";
+import UserDetails from './UserDetails';
 
 function ProfileScreen({ route }) {
-    
   const handleLogout = route.params.handleLogout;
+  const navigation = useNavigation();
+
+  const handleUserDetails = () => {
+    navigation.navigate('UserDetails');
+  };
   
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Logout</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.user} onPress={handleUserDetails}>
+        <Text>User Details</Text>
       </TouchableOpacity>
     </View>
   );
@@ -36,6 +44,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
+  },
+  user: {
+    paddingTop: 30,
   },
 });
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image,TouchableOpacity } from 'react-native';
 import Button from "./Button";
 const Home = (props) => {
     return (
@@ -25,6 +25,9 @@ const Home = (props) => {
                     btnLabel='Sign Up'
                     Press={() => props.navigation.navigate('Signup')} />
             </View>
+            {/* <View><TouchableOpacity onPress={() => navigation.navigate('userDetails')}>User Details</TouchableOpacity></View> */}
+            
+
             </View>
             </View>
     );
