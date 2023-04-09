@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Press } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, onPress } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,33 +26,37 @@ function Main({ navigation }) {
 
     getToken();
   }, []);
-
   const handleLogout = async () => {
     try {
-      const token = await AsyncStorage.getItem('@token');
+      const token = await AsyncStorage.removeItem('@token');
   
       const response = await fetch('http://localhost:3333/api/1.0.0/logout', {
         method: 'POST',
         headers: {
-          'X-Authorization': token,
+          'X-Authorization': token, 
           'Content-Type': 'application/json',
         },
       });
   
       if (response.ok) {
-        // Logout was successful, remove token from async storage
-        await AsyncStorage.removeItem('@token');
-        await AsyncStorage.removeItem('@id');
-        setToken(null);
-        navigation.navigate('Home');
+        // Logout was successful, remove all user data from async storage
+        await AsyncStorage.multiRemove(['@token', '@id']);
+        console.log("Token removed");
+        // Navigate to login screen
+        navigation.navigate('Login', { setToken }); // Pass the setToken function as a parameter
       } else {
-        // Logout failed, log error message
-        console.log('Logout failed');
+        // Logout failed, display error message
+        const errorJson = await response.json();
+        console.log('Logout failed:', errorJson.message);
+        // You can display the error message to the user using an alert or a Toast message
       }
     } catch (error) {
-      console.log(error);
+      console.log('Logout failed:', error);
+      // You can display the error message to the user using an alert or a Toast message
     }
   };
+  
+  
 
   if (!token) {
     // Render Login component if user has not logged in yet
@@ -64,19 +68,17 @@ function Main({ navigation }) {
       <Tab.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={({ navigation }) => ({
+        options={({}) => ({
           headerShown: false,
           tabBarLabel: 'Profile',
           tabBarIcon: ({ size }) => (
             <MaterialCommunityIcons name="account-circle" color="green" size={size} />
           ),
-          headerRight: () => (
-            <TouchableOpacity onPress={handleLogout}>
-              <Text style={styles.logoutButton}>Logout</Text>
-            </TouchableOpacity>
-          ),
+        
         })}
-      />
+        initialParams={{handleLogout:handleLogout}}
+      ></Tab.Screen>
+      
       <Tab.Screen
         name="ChatsScreen"
         component={ChatsScreen}

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function UserDetails ({ id, token, navigation }) {
+function UserDetails ({ token, navigation }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -34,6 +34,10 @@ function UserDetails ({ id, token, navigation }) {
 
   return (
     <View style={styles.container}>
+         <Image
+        source={require('./assets/whatsthat.png')}
+        style={{ width: 100, height: 100, display: 'flex', marginLeft: 30, marginBottom: 30, }}
+      />
       <Text style={styles.title}>Account Details</Text>
       <Text style={styles.label}>ID:</Text>
       {user.user_id && <TextInput style={styles.input} value={user.user_id.toString()} editable={false} />}
@@ -80,6 +84,7 @@ const styles = StyleSheet.create({
     margin:10,
     width: 250,
     fontSize: 16,
+    color:"white"
   },
   error:{
     fontSize:16,

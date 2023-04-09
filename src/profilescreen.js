@@ -1,18 +1,22 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
-import UserDetails from './UserDetails';
 
 
-function ProfileScreen({}) {
+function ProfileScreen(Props) {
   const navigation = useNavigation();
-
   const handleUserDetails = () => {
     navigation.navigate('UserDetails');
-  };
-  const handleLogout=()=>{
-    
   }
+  const EditUser = () => {
+    navigation.navigate('EditUser');
+  }
+    const handleLogout = () =>{
+      Props.route.params.handleLogout();
+      console.log("Logout is pressed")
+    
+  };
+
   
   return (
     <View style={styles.container}>
@@ -20,10 +24,15 @@ function ProfileScreen({}) {
       <TouchableOpacity style={styles.button} onPress={handleUserDetails}>
         <Text style={styles.buttonText}>User Details</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleLogout}>
-        <Text style={styles.buttonText}>Logout</Text>
+      <TouchableOpacity style={styles.button} onPress={EditUser}>
+        <Text style={styles.buttonText}>Edit Account</Text>
       </TouchableOpacity>
-    </View>
+      <TouchableOpacity style={styles.button} onPress={handleLogout}>
+  <Text style={styles.buttonText}>Logout</Text>
+</TouchableOpacity>
+
+
+    </View> 
   );
 }
 
