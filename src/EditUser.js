@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, Alert } fro
 import AsyncStorage from '@react-native-async-storage/async-storage';
  
 
-function EditUser() {
+function EditUser({  navigation }) {
   const [first_name, setFirstName] = useState(first_name);
   const [last_name,setLastName] = useState(last_name);
   const [email, setEmail] = useState(email);
@@ -122,6 +122,12 @@ function EditUser() {
         <Text style={styles.buttonText}>Save Changes</Text>
       </TouchableOpacity>
      
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.buttonText}>Back</Text>
+      </TouchableOpacity>
     </View>
   );
 }
