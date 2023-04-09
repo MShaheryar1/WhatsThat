@@ -28,8 +28,8 @@ function Main({ navigation }) {
   }, []);
   const handleLogout = async () => {
     try {
-      const token = await AsyncStorage.removeItem('@token');
-  
+      const token = await AsyncStorage.getItem('@token');
+      
       const response = await fetch('http://localhost:3333/api/1.0.0/logout', {
         method: 'POST',
         headers: {
