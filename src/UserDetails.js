@@ -20,7 +20,9 @@ function UserDetails ({ token, navigation }) {
           }
         });
         const data = await response.json();
+        console.log(data, " this is data")
         setUser(data);
+        await AsyncStorage.setItem('user', data);
       } catch (error) {
         console.error(error);
       }

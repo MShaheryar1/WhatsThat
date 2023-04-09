@@ -19,6 +19,28 @@ export default function Login() {
   const [token, setToken] = useState(null);
 
 
+  const fetchUser = async () => {
+    try {
+      const token = await AsyncStorage.getItem('@token');
+      const id = await AsyncStorage.getItem('@id');
+
+      const response = await fetch(`http://localhost:3333/api/1.0.0/user/${id}`, {
+          method:'GET',
+        headers: {
+          "X-Authorization":  token,
+          "Content-Type": "application/json",
+        }
+      });
+      const data = await response.json();
+      console.log(data, " this is data");
+      await AsyncStorage.setItem('first_name', data.first_name);
+      await AsyncStorage.setItem('last_name', data.last_name);
+      await AsyncStorage.setItem('email', data.email);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleLogin = async () => {
     try {
       const response = await fetch('http://localhost:3333/api/1.0.0/login', {
@@ -34,13 +56,15 @@ export default function Login() {
       // Save the token in local storage
       await AsyncStorage.setItem('@token', data.token);
       await AsyncStorage.setItem('@id', data.id);
-      setToken(data.token);
+      fetchUser();
       // Navigate to the Chats screen
       navigation.navigate('Main');
     } catch (error) {
       console.error(error);
     }
   };
+
+
   
   
   return (

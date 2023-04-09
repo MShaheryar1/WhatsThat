@@ -10,17 +10,26 @@ function EditUser() {
   const [password, setPassword] = useState(password);
 
   useEffect(() => {
+ 
+      
     // Fetch user details from AsyncStorage and update the state
-    AsyncStorage.getItem('userDetails').then((data) => {
-      if (data !== null) {
-        const { first_name,last_name, email, password } = JSON.parse(data);
+    AsyncStorage.getItem('first_name').then((first_name) => {
+      if (first_name !== null) {
         setFirstName(first_name);
-        setLastName(last_name);
-        setEmail(email);
-        setPassword(password);
-        
       }
-    });
+    })
+
+    AsyncStorage.getItem('last_name').then((last_name) => {
+        if (last_name !== null) {
+          setLastName(last_name);
+        };
+      })
+      AsyncStorage.getItem('email').then((email) => {
+        if (email !== null) {
+          setEmail(email);
+        }
+      })
+      
   }, []);
 
   const handleSubmit = async () => {
@@ -31,8 +40,8 @@ function EditUser() {
     }
   
     // Get user id and token from AsyncStorage
-    const userData = await AsyncStorage.getItem('userData');
-    const { id, token } = JSON.parse(userData); 
+    const token = await AsyncStorage.getItem('@token');
+    const id = await AsyncStorage.getItem('@id');
   
     // Make API call to update user details
     const url = `http://localhost:3333/api/1.0.0/user/${id}`;
@@ -64,7 +73,7 @@ function EditUser() {
     Alert.alert('Success', 'User details updated successfully');
   };
   
-  console.log('State:', { first_name, last_name, email, password });
+  //console.log('State:', { first_name, last_name, email, password });
   return (
     <View style={styles.container}>
       <Image
@@ -76,6 +85,7 @@ function EditUser() {
       <Text style={styles.label}>First Name:</Text>
       <TextInput
         style={styles.input}
+        defaultValue={first_name}
         placeholder={first_name}
         value={first_name}
         onChangeText={(text) => setFirstName(text)}
@@ -83,6 +93,7 @@ function EditUser() {
        <Text style={styles.label}>Last Name:</Text>
       <TextInput
         style={styles.input}
+        defaultValue={last_name}
         placeholder={last_name}
         value={last_name}
         onChangeText={(text) => setLastName(text)}
@@ -91,6 +102,7 @@ function EditUser() {
       <Text style={styles.label}>Email:</Text>
       <TextInput
         style={styles.input}
+        defaultValue={email}
         placeholder={email}
         value={email}
         onChangeText={(text) => setEmail(text)}
@@ -100,6 +112,7 @@ function EditUser() {
       <TextInput
         style={styles.input}
         placeholder={password}
+        defaultValue={password}
         value={password}
         secureTextEntry={true}
         onChangeText={(text) => setPassword(text)}
