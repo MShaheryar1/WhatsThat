@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import singlechat from './singlechat'
 
 function ChatsScreen(props) {
   const navigation = useNavigation()
@@ -37,12 +38,18 @@ function ChatsScreen(props) {
   const addchat = () => {
     navigation.navigate('addchat')
   }
+  const singlechat = () => {
+    navigation.navigate('singlechat')
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Chats</Text>
 
       <TouchableOpacity style={styles.button} onPress={addchat}>
         <Text style={styles.buttonText}>Add Chat</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={singlechat}>
+        <Text style={styles.buttonText}>Single Chat</Text>
       </TouchableOpacity>
       <ul>
         {chatList.map((chat) => (
@@ -67,6 +74,19 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+  },
+  button: {
+    backgroundColor: 'white',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 20,
+    color: 'green',
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 })
 
