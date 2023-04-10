@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-function addchat() {
+function addchat(navigation) {
   const [name, setName] = useState(name)
 
   const addtochat = async () => {
@@ -44,6 +44,12 @@ function addchat() {
       <TouchableOpacity style={styles.button} onPress={addtochat}>
         <Text style={styles.buttonText}>Add chat</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.buttonText}>Back</Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -59,6 +65,19 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+  },
+  button: {
+    backgroundColor: 'white',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 20,
+    color: 'green',
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 })
 
