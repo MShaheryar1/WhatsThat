@@ -46,19 +46,19 @@ function ChatsScreen(props) {
       <Text style={styles.title}>Chats</Text>
 
       <TouchableOpacity style={styles.button} onPress={addchat}>
-        <Text style={styles.buttonText}>Add Chat</Text>
+        <Text style={styles.buttonText}>Create Chat</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={singlechat}>
         <Text style={styles.buttonText}>Single Chat</Text>
       </TouchableOpacity>
-      <ul>
+
+      <View style={styles.field}>
         {chatList.map((chat) => (
-          <>
-            <li key={chat.id}>{chat.name}</li>
-            {/* <li key={chat.last_message}>{chat.message}</li> */}
-          </>
+          <Text style={styles.chat} key={chat.id}>
+            {chat.name}
+          </Text>
         ))}
-      </ul>
+      </View>
     </View>
   )
 }
@@ -86,6 +86,19 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'black',
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+  field: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 5,
+    padding: 30,
+    marginTop: 20,
+    width: '90%',
+  },
+  chat: {
+    fontSize: 20,
+    color: 'white',
     fontWeight: 'bold',
   },
 })

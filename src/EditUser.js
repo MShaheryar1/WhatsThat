@@ -137,6 +137,7 @@ function EditUser({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.container}>
+        <Text style={styles.title}>Upload Profile Picture here</Text>
         <input
           type="file"
           accept=".png, .jpg, .jpeg"
@@ -144,7 +145,9 @@ function EditUser({ navigation }) {
         />
 
         {imageSource && <Image source={imageSource} style={styles.image} />}
-        <button onClick={() => postImage()}>upload image </button>
+        <button style={styles.button} onClick={() => postImage()}>
+          Post Image{' '}
+        </button>
       </View>
 
       <Text style={styles.title}>Edit Details</Text>

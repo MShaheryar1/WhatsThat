@@ -39,6 +39,14 @@ function singlechat() {
       <TouchableOpacity style={styles.button} onPress={fsinglechat}>
         <Text style={styles.buttonText}>Get chat</Text>
       </TouchableOpacity>
+      <Text style={styles.label}>First Name:</Text>
+      {user.first_name && (
+        <TextInput
+          style={styles.input}
+          value={user.first_name}
+          editable={false}
+        />
+      )}
     </View>
   )
 }

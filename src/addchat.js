@@ -32,17 +32,16 @@ function addchat(navigation) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Add chat</Text>
-      <Text style={styles.label}>Name:</Text>
+      <Text style={styles.title}>Create chat</Text>
       <TextInput
         style={styles.input}
-        defaultValue={name}
+        defaultValue={'Please enter chat name'}
         placeholder={name}
         value={name}
         onChangeText={(text) => setName(text)}
       />
       <TouchableOpacity style={styles.button} onPress={addtochat}>
-        <Text style={styles.buttonText}>Add chat</Text>
+        <Text style={styles.buttonText}>create chat</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
@@ -77,6 +76,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'black',
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+  label: {
+    fontSize: 20,
     fontWeight: 'bold',
   },
 })
