@@ -13,6 +13,8 @@ import Addchat from './src/Addchat'
 import Singlechat from './src/Singlechat'
 import AddContact from './src/AddContact'
 import ViewContact from './src/ViewContact'
+import DeleteContact from './src/DeleteContact'
+import BlockContact from './src/BlockContact'
 
 const Stack = createNativeStackNavigator()
 
@@ -51,6 +53,8 @@ function App() {
         <Stack.Screen name="Singlechat" component={Singlechat} />
         <Stack.Screen name="AddContact" component={AddContact} />
         <Stack.Screen name="ViewContact" component={ViewContact} />
+        <Stack.Screen name="DeleteContact" component={DeleteContact} />
+        <Stack.Screen name="BlockContact" component={BlockContact} />
       </Stack.Navigator>
     </NavigationContainer>
   )

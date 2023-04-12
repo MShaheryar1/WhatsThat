@@ -11,11 +11,11 @@ import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-function AddContact() {
+function BlockContact() {
   const [user_id, setUserId] = useState('')
   const navigation = useNavigation()
 
-  const handleAddContact = async () => {
+  const Block = async () => {
     try {
       const token = await AsyncStorage.getItem('@token')
       console.log(token, 'print token')
@@ -26,7 +26,7 @@ function AddContact() {
       }
 
       const response = await fetch(
-        `http://localhost:3333/api/1.0.0/user/${user_id}/contact`,
+        `http://localhost:3333/api/1.0.0/user/${user_id}/block`,
         {
           method: 'POST',
           headers: {
@@ -40,7 +40,7 @@ function AddContact() {
         Alert.alert('Success', `User ${user_id} added to contacts`)
         setUserId('')
       } else if (response.status === 400) {
-        Alert.alert('Error', 'You cannot add yourself')
+        Alert.alert('Error', 'You cannot Delete yourself')
       } else if (response.status === 404) {
         Alert.alert('Error', 'User not found')
       } else {
@@ -66,8 +66,8 @@ function AddContact() {
           keyboardType="number-pad"
         />
       </View>
-      <TouchableOpacity style={styles.addButton} onPress={handleAddContact}>
-        <Text style={styles.addButtonText}>Add</Text>
+      <TouchableOpacity style={styles.addButton} onPress={Block}>
+        <Text style={styles.addButtonText}>Delete</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.backButton}
@@ -128,4 +128,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default AddContact
+export default BlockContact
