@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -30,49 +35,38 @@ function ChatsScreen(props) {
     viewchat()
   }, [])
 
-  const Addchat = () => {
+  const addChat = () => {
     navigation.navigate('Addchat')
   }
-  const Singlechat = () => {
+  const viewChat = () => {
     navigation.navigate('Singlechat')
   }
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <TouchableOpacity style={styles.button} onPress={Addchat}>
-          <Text style={styles.buttonText}>Create Chat</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={Singlechat}>
-          <Text style={styles.buttonText}>Single Chat</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity style={styles.button} onPress={addChat}>
+            <Text style={styles.buttonText}>Create Chat</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={viewChat}>
+            <Text style={styles.buttonText}>View Single Chat</Text>
+          </TouchableOpacity>
+        </View>
 
-        <View style={styles.field}>
+        <View style={styles.chatList}>
           <Text style={styles.title}>List of Chats</Text>
           {chatList.map((chat) => (
-            <View key={chat.id}>
-              <Text style={styles.chat}>
-                {chat.id} {chat.name}
-              </Text>
-              <Text>
-                User ID: {chat.creator.user_id}
-                {'\n'}
-                Name: {chat.creator.first_name} {chat.creator.last_name}
-                {'\n'}
-                E-mail: {chat.creator.email}
-              </Text>
+            <View key={chat.id} style={styles.chat}>
+              <View style={styles.chatHeader}>
+                <Text style={styles.chatTitle}>{chat.name}</Text>
+                <Text style={styles.chatCreator}>
+                  {'Created by: '}
+                  {chat.creator.first_name} {chat.creator.last_name}
+                </Text>
+              </View>
 
-              {chat.members && (
-                <View>
-                  <Text>Members:</Text>
-                  {chat.members.map((member) => (
-                    <Text key={member.user_id}>
-                      {member.user_id} {member.first_name} {member.last_name}{' '}
-                      {member.email}
-                    </Text>
-                  ))}
-                </View>
-              )}
-              <Text>{chat.messages}</Text>
+              <Text style={styles.chatMessage}>{chat.messages}</Text>
             </View>
           ))}
         </View>
@@ -82,52 +76,64 @@ function ChatsScreen(props) {
 }
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#808000',
-    widht: '150%',
-  },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#808000',
+    padding: 20,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 100,
+    alignItems: 'center',
+    marginTop: 40,
+  },
+  buttonText: {
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  chatList: {
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+    padding: 20,
+    marginBottom: 20,
+    marginTop: 30,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: 'white',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 100,
-    marginTop: 50,
-    color: 'green',
-  },
-  buttonText: {
-    color: 'black',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  field: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
-    padding: 30,
-    marginTop: 20,
-    width: '150%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    textAlign: 'center',
+    marginBottom: 10,
   },
   chat: {
+    marginBottom: 20,
+  },
+  chatHeader: {
     fontSize: 20,
-    color: 'white',
     fontWeight: 'bold',
-    marginBottom: 10,
+  },
+  chatCreator: {
+    fontSize: 16,
+    color: '#666666',
+  },
+  chatMessage: {
+    fontSize: 16,
+    color: '#666666',
   },
 })
 
