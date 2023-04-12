@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text, StyleSheet, Touchable } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+
 function ContactScreen() {
   const navigation = useNavigation()
 
@@ -25,24 +25,24 @@ function ContactScreen() {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Contacts</Text>
+      <Text style={styles.title}>Contacts Management </Text>
       <TouchableOpacity style={styles.button} onPress={AddContact}>
-        <Text style={styles.buttonText}> Add Contact</Text>
+        <Text style={styles.buttonText}>Add Contact</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={ViewContact}>
-        <Text style={styles.buttonText}> View Contacts</Text>
+        <Text style={styles.buttonText}>View Contacts</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={DeleteContact}>
-        <Text style={styles.buttonText}> Delete Contact </Text>
+        <Text style={styles.buttonText}>Delete Contact</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={BlockContact}>
-        <Text style={styles.buttonText}> Block Contact </Text>
+        <Text style={styles.buttonText}>Block Contact</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={ViewBlocked}>
-        <Text style={styles.buttonText}> View Blocked Contacts </Text>
+        <Text style={styles.buttonText}>View Blocked Contacts</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={Unblock}>
-        <Text style={styles.buttonText}> Unblock </Text>
+        <Text style={styles.buttonText}>Unblock</Text>
       </TouchableOpacity>
     </View>
   )
@@ -56,17 +56,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#808000',
   },
   title: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
     marginBottom: 20,
   },
   button: {
     backgroundColor: 'white',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 100,
-    marginTop: 50,
-    color: 'green',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 24,
+    marginTop: 20,
+    alignItems: 'center',
+    width: '80%',
   },
   buttonText: {
     color: 'black',

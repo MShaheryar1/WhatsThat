@@ -49,30 +49,15 @@ function ChatsScreen(props) {
         <View style={styles.field}>
           <Text style={styles.title}>List of Chats</Text>
           {chatList.map((chat) => (
-            <View key={chat.id}>
-              <Text style={styles.chat}>
-                {chat.id} {chat.name}
+            <View key={chat.id} style={styles.chatContainer}>
+              <Text style={styles.chatName}>{chat.name}</Text>
+              <Text style={styles.chatCreator}>
+                Created by {chat.creator.first_name} {chat.creator.last_name}
               </Text>
-              <Text>
-                User ID: {chat.creator.user_id}
-                {'\n'}
-                Name: {chat.creator.first_name} {chat.creator.last_name}
-                {'\n'}
-                E-mail: {chat.creator.email}
+              <Text style={styles.chatInfo}>
+                {chat.creator.email} ({chat.creator.user_id})
               </Text>
-
-              {chat.members && (
-                <View>
-                  <Text>Members:</Text>
-                  {chat.members.map((member) => (
-                    <Text key={member.user_id}>
-                      {member.user_id} {member.first_name} {member.last_name}{' '}
-                      {member.email}
-                    </Text>
-                  ))}
-                </View>
-              )}
-              <Text>{chat.messages}</Text>
+              <Text style={styles.chatMessages}>{chat.messages}</Text>
             </View>
           ))}
         </View>
@@ -87,18 +72,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#808000',
-    widht: '150%',
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#808000',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginTop: 50,
     marginBottom: 20,
+    color: 'white',
   },
   button: {
     backgroundColor: 'white',
@@ -106,28 +90,35 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 100,
     marginTop: 50,
-    color: 'green',
+    marginBottom: 20,
   },
   buttonText: {
-    color: 'black',
-    fontSize: 16,
+    color: 'green',
     fontWeight: 'bold',
+    fontSize: 16,
   },
   field: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
-    padding: 30,
-    marginTop: 20,
-    width: '150%',
-    justifyContent: 'center',
+    flex: 1,
     alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 10,
+    marginBottom: 20,
+    width: '90%',
   },
-  chat: {
-    fontSize: 20,
-    color: 'white',
+  chatContainer: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    marginBottom: 20,
+    width: '100%',
+  },
+  chatName: {
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
+  },
+  chatInfo: {
+    fontSize: 14,
   },
 })
 
