@@ -3,11 +3,9 @@ import { View, Text, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import singlechat from './singlechat'
 
 function ChatsScreen(props) {
   const navigation = useNavigation()
-  const [user, setUser] = useState(null)
 
   const [chatList, setChatList] = useState([])
 
@@ -35,24 +33,23 @@ function ChatsScreen(props) {
     viewchat()
   }, [])
 
-  const addchat = () => {
-    navigation.navigate('addchat')
+  const Addchat = () => {
+    navigation.navigate('Addchat')
   }
-  const singlechat = () => {
-    navigation.navigate('singlechat')
+  const Singlechat = () => {
+    navigation.navigate('Singlechat')
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Chats</Text>
-
-      <TouchableOpacity style={styles.button} onPress={addchat}>
+      <TouchableOpacity style={styles.button} onPress={Addchat}>
         <Text style={styles.buttonText}>Create Chat</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={singlechat}>
+      <TouchableOpacity style={styles.button} onPress={Singlechat}>
         <Text style={styles.buttonText}>Single Chat</Text>
       </TouchableOpacity>
 
       <View style={styles.field}>
+        <Text style={styles.title}>List of Chats</Text>
         {chatList.map((chat) => (
           <Text style={styles.chat} key={chat.id}>
             {chat.name}
@@ -79,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 5,
+    borderRadius: 100,
     marginTop: 20,
     color: 'green',
   },
@@ -95,11 +92,14 @@ const styles = StyleSheet.create({
     padding: 30,
     marginTop: 20,
     width: '90%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   chat: {
     fontSize: 20,
     color: 'white',
     fontWeight: 'bold',
+    marginBottom: 10,
   },
 })
 

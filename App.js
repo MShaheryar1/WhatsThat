@@ -9,8 +9,8 @@ import Signup from './src/Signup'
 import Main from './src/main'
 import UserDetails from './src/UserDetails'
 import EditUser from './src/EditUser'
-import addchat from './src/addchat'
-import singlechat from './src/singlechat'
+import Addchat from './src/Addchat'
+import Singlechat from './src/Singlechat'
 
 const Stack = createNativeStackNavigator()
 
@@ -45,8 +45,8 @@ function App() {
             ),
           })}
         />
-        <Stack.Screen name="addchat" component={addchat} />
-        <Stack.Screen name="singlechat" component={singlechat} />
+        <Stack.Screen name="Addchat" component={Addchat} />
+        <Stack.Screen name="Singlechat" component={Singlechat} />
       </Stack.Navigator>
     </NavigationContainer>
   )

@@ -4,8 +4,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-function addchat(navigation) {
+function Addchat() {
   const [name, setName] = useState(name)
+  const navigation = useNavigation()
 
   const addtochat = async () => {
     try {
@@ -35,8 +36,8 @@ function addchat(navigation) {
       <Text style={styles.title}>Create chat</Text>
       <TextInput
         style={styles.input}
-        defaultValue={'Please enter chat name'}
-        placeholder={name}
+        defaultValue={name}
+        placeholder={'Enter Chat Name'}
         value={name}
         onChangeText={(text) => setName(text)}
       />
@@ -82,6 +83,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  input: {
+    placeholder: {
+      fontSize: 20,
+    },
+  },
 })
 
-export default addchat
+export default Addchat

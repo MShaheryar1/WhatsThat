@@ -67,11 +67,12 @@ function UserDetails({ token, navigation }) {
     <View style={styles.container}>
       <img
         style={{
-          width: 100,
-          height: 100,
+          width: 180,
+          height: 180,
           display: 'flex',
-          marginLeft: 30,
+          marginLeft: 25,
           marginBottom: 30,
+          borderRadius: 100,
         }}
         src={imageSrc}
       ></img>

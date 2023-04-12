@@ -9,8 +9,7 @@ import {
   Alert,
 } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import ImagePicker from 'react-native-image-picker'
-import FileSelectorManager from 'react-native-file-selector'
+import { Ionicons } from '@expo/vector-icons'
 
 function EditUser({ navigation }) {
   const [first_name, setFirstName] = useState(first_name)
@@ -189,7 +188,7 @@ function EditUser({ navigation }) {
       />
 
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Save Changes</Text>
+        <Ionicons name="save" size={30} color="black" />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -204,7 +203,7 @@ function EditUser({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: -1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#808000',
@@ -212,7 +211,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginTop: '20',
   },
   label: {
     fontSize: 16,

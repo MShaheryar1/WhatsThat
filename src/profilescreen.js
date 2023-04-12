@@ -1,26 +1,24 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
-
+import React from 'react'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { Ionicons } from '@expo/vector-icons'
 
 function ProfileScreen(Props) {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
   const handleUserDetails = () => {
-    navigation.navigate('UserDetails');
+    navigation.navigate('UserDetails')
   }
   const EditUser = () => {
-    navigation.navigate('EditUser');
+    navigation.navigate('EditUser')
   }
-    const handleLogout = () =>{
-      Props.route.params.handleLogout();
-      console.log("Logout is pressed")
-    
-  };
+  const handleLogout = () => {
+    Props.route.params.handleLogout()
+    console.log('Logout is pressed')
+  }
 
-  
   return (
     <View style={styles.container}>
-<Text style={styles.title}>Profile</Text>
+      <Text style={styles.title}>Profile</Text>
       <TouchableOpacity style={styles.button} onPress={handleUserDetails}>
         <Text style={styles.buttonText}>User Details</Text>
       </TouchableOpacity>
@@ -28,12 +26,11 @@ function ProfileScreen(Props) {
         <Text style={styles.buttonText}>Edit Account</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
-  <Text style={styles.buttonText}>Logout</Text>
-</TouchableOpacity>
-
-
-    </View> 
-  );
+        <Ionicons name="log-out" size={30} color="black" />
+        {/* <Text style={styles.buttonText}>Logout</Text> */}
+      </TouchableOpacity>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -47,22 +44,20 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    
   },
   button: {
     backgroundColor: 'white',
     padding: 10,
-    borderRadius: 5,
-    paddingTop:10,
-    marginVertical:50,
+    borderRadius: 100,
+    paddingTop: 10,
+    marginVertical: 50,
   },
   buttonText: {
     color: '#black',
     fontSize: 16,
     fontWeight: 'bold',
-    fontFamily:'serif',
+    fontFamily: 'serif',
   },
-  
-});
+})
 
-export default ProfileScreen;
+export default ProfileScreen

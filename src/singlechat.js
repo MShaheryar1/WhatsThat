@@ -2,10 +2,18 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/native'
 
-function singlechat() {
-  const [chat_id, setChatId] = useState(chat_id)
-  const [chat, setChat] = useState(chat)
+function Singlechat() {
+  const [chat_id, setChatId] = useState('')
+  const [chat, setChat] = useState({
+    name: '',
+    creator: { user_id: '', first_name: '', last_name: '' },
+    members: { user_id: '', first_name: '', last_name: '' },
+    messages: {},
+  })
+
+  const navigation = useNavigation()
 
   const fsinglechat = async () => {
     const token = await AsyncStorage.getItem('@token')
@@ -19,9 +27,15 @@ function singlechat() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data, 'data')
         setChat(data)
-        setTimeout(() => {}, 5000)
+        console.log(data.creator, 'data creator')
+        // console.log(data, 'this is data')
+
+        // console.log(typeof data)
+        // console.log(data[creator], 'hello sherry')
+        // console.log(Object.keys(data))
+        // console.log(data.creator, ' data creator')
+        // console.log(chat.creator, 'chat creator')
       })
       .catch((error) => console.log(error))
   }
@@ -32,21 +46,65 @@ function singlechat() {
       <TextInput
         style={styles.input}
         defaultValue={chat_id}
-        placeholder={chat_id}
+        placeholder="Enter ID Number"
         value={chat_id}
         onChangeText={(text) => setChatId(text)}
       />
       <TouchableOpacity style={styles.button} onPress={fsinglechat}>
         <Text style={styles.buttonText}>Get chat</Text>
       </TouchableOpacity>
-      <Text style={styles.label}>First Name:</Text>
-      {user.first_name && (
-        <TextInput
-          style={styles.input}
-          value={user.first_name}
-          editable={false}
-        />
+      {chat && (
+        // render the chat details once chat state is not null
+        <View>
+          <Text style={styles.label}>Chat Name:</Text>
+          <TextInput style={styles.input} value={chat.name} editable={false} />
+
+          <Text style={styles.label}> Creator</Text>
+          <TextInput
+            style={styles.input}
+            value={chat.creator.user_id}
+            editable={false}
+          />
+          <TextInput
+            style={styles.input}
+            value={`${chat.creator.first_name}\n${chat.creator.last_name}`}
+            editable={false}
+          />
+          <TextInput
+            style={styles.input}
+            value={chat.creator.email}
+            editable={false}
+          />
+          <Text style={styles.label}> Members</Text>
+          <TextInput
+            style={styles.input}
+            value={chat.members.user_id}
+            editable={false}
+          />
+          <TextInput
+            style={styles.input}
+            value={`${chat.members.first_name}\n${chat.members.last_name}`}
+            editable={false}
+          />
+          <TextInput
+            style={styles.input}
+            value={chat.members.email}
+            editable={false}
+          />
+          <Text style={styles.label}> Last Message</Text>
+          <TextInput
+            style={styles.input}
+            value={chat.messages}
+            editable={false}
+          />
+        </View>
       )}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.buttonText}>Back</Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -78,6 +136,9 @@ const styles = StyleSheet.create({
     width: 250,
     fontSize: 16,
     color: 'white',
+    placeholder: {
+      fontSize: 50,
+    },
   },
   error: {
     fontSize: 16,
@@ -98,4 +159,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default singlechat
+export default Singlechat
