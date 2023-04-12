@@ -1,68 +1,78 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, Alert } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Alert,
+  TouchableOpacity,
+} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 
 function AddContact() {
   const [user_id, setUserId] = useState('')
   const navigation = useNavigation()
-  const Addto = async () => {
+
+  const handleAddContact = async () => {
     try {
       const token = await AsyncStorage.getItem('@token')
       console.log(token, 'print token')
 
       if (!user_id) {
-        console.log('User ID is empty')
+        Alert.alert('Error', 'Please enter user ID')
         return
       }
 
-      fetch('http://localhost:3333/api/1.0.0/user/' + user_id + '/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Authorization': token,
-        },
-      })
-        .then(async (response) => response.json())
-        .then((data) => console.log(data, 'this is data'))
+      const response = await fetch(
+        `http://localhost:3333/api/1.0.0/user/${user_id}/contact`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': token,
+          },
+        }
+      )
 
-      //     console.log('Add contacts sent to api')
-      //     if (response.status === 200) {
-      //       console.log('User ' + user_id + ' added to contacts')
-      //       setUserId(user_id)
-      //     } else if (response.status === 400) {
-      //       console.log('You cannot add yourself')
-      //     } else if (response.status === 404) {
-      //       console.log('User not found')
-      //     } else {
-      //       throw 'something went wrong'
-      //     }
-      //   }
+      if (response.status === 200) {
+        Alert.alert('Success', `User ${user_id} added to contacts`)
+        setUserId('')
+      } else if (response.status === 400) {
+        Alert.alert('Error', 'You cannot add yourself')
+      } else if (response.status === 404) {
+        Alert.alert('Error', 'User not found')
+      } else {
+        throw 'Something went wrong'
+      }
     } catch (error) {
       console.log(error)
+      Alert.alert('Error', 'Something went wrong')
     }
   }
+
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Enter User ID </Text>
       <View style={styles.inputView}>
-        <Text style={styles.title}>Enter ID </Text>
+        <Ionicons name="person-outline" size={24} color="black" />
         <TextInput
-          style={styles.TextInput}
-          placeholder="Enter ID"
-          placeholderTextColor="#003f5c"
-          onChangeText={(user_id) => setUserId(user_id)}
+          style={styles.textInput}
+          placeholder="User ID"
+          placeholderTextColor="#444"
+          value={user_id}
+          onChangeText={setUserId}
+          keyboardType="number-pad"
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={Addto}>
-        <Text style={styles.buttonText}>Add</Text>
+      <TouchableOpacity style={styles.addButton} onPress={handleAddContact}>
+        <Text style={styles.addButtonText}>Add</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.button}
+        style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Ionicons name="ios-backspace-sharp" size={30} color="black" />
+        <Ionicons name="ios-arrow-back" size={24} color="white" />
       </TouchableOpacity>
     </View>
   )
@@ -71,27 +81,49 @@ function AddContact() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#808000',
+    padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#808000',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#444',
   },
-  button: {
+  inputView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f2f2f2',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  textInput: {
+    flex: 1,
+    marginLeft: 10,
+    fontSize: 18,
+    color: '#444',
+  },
+  addButton: {
     backgroundColor: 'white',
-    paddingVertical: 10,
+    borderRadius: 25,
+    paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 100,
-    marginTop: 50,
-    color: 'green',
+    alignItems: 'center',
+    marginTop: 60,
   },
-  buttonText: {
+  addButtonText: {
     color: 'black',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
+  },
+  backButton: {
+    position: 'absolute',
+    bottom: 20, // Updated position
+    left: 20,
+    padding: 10,
   },
 })
 
