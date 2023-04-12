@@ -12,6 +12,7 @@ import EditUser from './src/EditUser'
 import Addchat from './src/Addchat'
 import Singlechat from './src/Singlechat'
 import AddContact from './src/AddContact'
+import ViewContact from './src/ViewContact'
 
 const Stack = createNativeStackNavigator()
 
@@ -49,6 +50,7 @@ function App() {
         <Stack.Screen name="Addchat" component={Addchat} />
         <Stack.Screen name="Singlechat" component={Singlechat} />
         <Stack.Screen name="AddContact" component={AddContact} />
+        <Stack.Screen name="ViewContact" component={ViewContact} />
       </Stack.Navigator>
     </NavigationContainer>
   )
