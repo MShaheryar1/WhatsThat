@@ -18,7 +18,7 @@ function ContactScreen() {
         <Text style={styles.buttonText}> Add Contact</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={ViewContact}>
-        <Text style={styles.buttonText}> View</Text>
+        <Text style={styles.buttonText}> View Contacts</Text>
       </TouchableOpacity>
     </View>
   )

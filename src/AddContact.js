@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, Alert } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/native'
+import { Ionicons } from '@expo/vector-icons'
 
 function AddContact() {
   const [user_id, setUserId] = useState('')
-
+  const navigation = useNavigation()
   const Addto = async () => {
     try {
       const token = await AsyncStorage.getItem('@token')
@@ -55,6 +57,12 @@ function AddContact() {
       </View>
       <TouchableOpacity style={styles.button} onPress={Addto}>
         <Text style={styles.buttonText}>Add</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.goBack()}
+      >
+        <Ionicons name="ios-backspace-sharp" size={30} color="black" />
       </TouchableOpacity>
     </View>
   )

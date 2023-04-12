@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Ionicons } from '@expo/vector-icons'
 
 function Addchat() {
   const [name, setName] = useState(name)
@@ -49,7 +50,7 @@ function Addchat() {
           style={styles.button}
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.buttonText}>Back</Text>
+          <Ionicons name="ios-backspace-sharp" size={30} color="black" />
         </TouchableOpacity>
       </ScrollView>
     </View>
