@@ -15,6 +15,8 @@ import AddContact from './src/AddContact'
 import ViewContact from './src/ViewContact'
 import DeleteContact from './src/DeleteContact'
 import BlockContact from './src/BlockContact'
+import ViewBlocked from './src/ViewBlocked'
+import Unblock from './src/Unblock'
 
 const Stack = createNativeStackNavigator()
 
@@ -55,6 +57,8 @@ function App() {
         <Stack.Screen name="ViewContact" component={ViewContact} />
         <Stack.Screen name="DeleteContact" component={DeleteContact} />
         <Stack.Screen name="BlockContact" component={BlockContact} />
+        <Stack.Screen name="ViewBlocked" component={ViewBlocked} />
+        <Stack.Screen name="Unblock" component={Unblock} />
       </Stack.Navigator>
     </NavigationContainer>
   )

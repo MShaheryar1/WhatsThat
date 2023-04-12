@@ -17,6 +17,12 @@ function ContactScreen() {
   const BlockContact = () => {
     navigation.navigate('BlockContact')
   }
+  const ViewBlocked = () => {
+    navigation.navigate('ViewBlocked')
+  }
+  const Unblock = () => {
+    navigation.navigate('Unblock')
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Contacts</Text>
@@ -31,6 +37,12 @@ function ContactScreen() {
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={BlockContact}>
         <Text style={styles.buttonText}> Block Contact </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={ViewBlocked}>
+        <Text style={styles.buttonText}> View Blocked Contacts </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={Unblock}>
+        <Text style={styles.buttonText}> Unblock </Text>
       </TouchableOpacity>
     </View>
   )

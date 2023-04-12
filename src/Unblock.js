@@ -11,11 +11,11 @@ import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-function BlockContact() {
+function Unblock() {
   const [user_id, setUserId] = useState('')
   const navigation = useNavigation()
 
-  const BlockContact = async () => {
+  const Unblock = async () => {
     try {
       const token = await AsyncStorage.getItem('@token')
       console.log(token, 'print token')
@@ -28,7 +28,7 @@ function BlockContact() {
       const response = await fetch(
         `http://localhost:3333/api/1.0.0/user/${user_id}/block`,
         {
-          method: 'POST',
+          method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
             'X-Authorization': token,
@@ -40,7 +40,7 @@ function BlockContact() {
         Alert.alert('Success', `User ${user_id} added to contacts`)
         setUserId('')
       } else if (response.status === 400) {
-        Alert.alert('Error', 'You cannot Block yourself')
+        Alert.alert('Error', 'You cannot Unblock yourself')
       } else if (response.status === 404) {
         Alert.alert('Error', 'User not found')
       } else {
@@ -66,8 +66,8 @@ function BlockContact() {
           keyboardType="number-pad"
         />
       </View>
-      <TouchableOpacity style={styles.addButton} onPress={BlockContact}>
-        <Text style={styles.addButtonText}>Block</Text>
+      <TouchableOpacity style={styles.addButton} onPress={Unblock}>
+        <Text style={styles.addButtonText}>Unblock</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.backButton}
@@ -128,4 +128,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default BlockContact
+export default Unblock
