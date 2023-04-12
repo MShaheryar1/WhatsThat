@@ -2,14 +2,11 @@ import React from 'react'
 import { View, Text, StyleSheet, Touchable } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-function ContactScreen() {
-  const AddContact = () => {
-    navigation.navigate('AddContact')
-  }
+function AddContact() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Contacts</Text>
-      <TouchableOpacity style={styles.button} onPress={AddContact}>
+      <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}> Add Contact</Text>
       </TouchableOpacity>
     </View>
@@ -43,4 +40,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ContactScreen
+export default AddContact
