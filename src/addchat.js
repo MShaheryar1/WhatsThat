@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -33,23 +33,25 @@ function Addchat() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Create chat</Text>
-      <TextInput
-        style={styles.input}
-        defaultValue={name}
-        placeholder={'Enter Chat Name'}
-        value={name}
-        onChangeText={(text) => setName(text)}
-      />
-      <TouchableOpacity style={styles.button} onPress={addtochat}>
-        <Text style={styles.buttonText}>create chat</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.buttonText}>Back</Text>
-      </TouchableOpacity>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Text style={styles.title}>Create chat</Text>
+        <TextInput
+          style={styles.input}
+          defaultValue={name}
+          placeholder={'Enter Chat Name'}
+          value={name}
+          onChangeText={(text) => setName(text)}
+        />
+        <TouchableOpacity style={styles.button} onPress={addtochat}>
+          <Text style={styles.buttonText}>create chat</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.buttonText}>Back</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   )
 }

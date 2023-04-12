@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -23,9 +23,6 @@ function ChatsScreen(props) {
       .then((data) => {
         console.log(data, 'data')
         setChatList((oldArray) => [...oldArray, ...data])
-        setTimeout(() => {
-          console.log(chatList, 'chatlist')
-        }, 5000)
       })
       .catch((error) => console.log(error))
   }
@@ -41,26 +38,57 @@ function ChatsScreen(props) {
   }
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={Addchat}>
-        <Text style={styles.buttonText}>Create Chat</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={Singlechat}>
-        <Text style={styles.buttonText}>Single Chat</Text>
-      </TouchableOpacity>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <TouchableOpacity style={styles.button} onPress={Addchat}>
+          <Text style={styles.buttonText}>Create Chat</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={Singlechat}>
+          <Text style={styles.buttonText}>Single Chat</Text>
+        </TouchableOpacity>
 
-      <View style={styles.field}>
-        <Text style={styles.title}>List of Chats</Text>
-        {chatList.map((chat) => (
-          <Text style={styles.chat} key={chat.id}>
-            {chat.name}
-          </Text>
-        ))}
-      </View>
+        <View style={styles.field}>
+          <Text style={styles.title}>List of Chats</Text>
+          {chatList.map((chat) => (
+            <View key={chat.id}>
+              <Text style={styles.chat}>
+                {chat.id} {chat.name}
+              </Text>
+              <Text>
+                User ID: {chat.creator.user_id}
+                {'\n'}
+                Name: {chat.creator.first_name} {chat.creator.last_name}
+                {'\n'}
+                E-mail: {chat.creator.email}
+              </Text>
+
+              {chat.members && (
+                <View>
+                  <Text>Members:</Text>
+                  {chat.members.map((member) => (
+                    <Text key={member.user_id}>
+                      {member.user_id} {member.first_name} {member.last_name}{' '}
+                      {member.email}
+                    </Text>
+                  ))}
+                </View>
+              )}
+              <Text>{chat.messages}</Text>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#808000',
+    widht: '150%',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -77,7 +105,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 100,
-    marginTop: 20,
+    marginTop: 50,
     color: 'green',
   },
   buttonText: {
@@ -91,7 +119,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 30,
     marginTop: 20,
-    width: '90%',
+    width: '150%',
     justifyContent: 'center',
     alignItems: 'center',
   },

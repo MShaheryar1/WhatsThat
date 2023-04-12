@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Ionicons } from '@expo/vector-icons'
 
 function UserDetails({ token, navigation }) {
   const [user, setUser] = useState(null)
@@ -109,7 +110,7 @@ function UserDetails({ token, navigation }) {
         style={styles.button}
         onPress={() => navigation.goBack()}
       >
-        <Text style={styles.buttonText}>Back</Text>
+        <Ionicons name="ios-backspace-sharp" size={30} color="black" />
       </TouchableOpacity>
     </View>
   )

@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   Alert,
+  ScrollView,
 } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Ionicons } from '@expo/vector-icons'
@@ -134,84 +135,104 @@ function EditUser({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        <Text style={styles.title}>Upload Profile Picture here</Text>
-        <input
-          type="file"
-          accept=".png, .jpg, .jpeg"
-          onChange={handleInputImage}
+        <View style={styles.container}>
+          <Text style={styles.title}>Upload Profile Picture here</Text>
+          <TouchableOpacity style={styles.chooseFileButton}>
+            <Text style={styles.chooseFileButtonText}>Choose file</Text>
+            <input
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              onChange={handleInputImage}
+              style={{
+                opacity: 0,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              }}
+            />
+          </TouchableOpacity>
+
+          {imageSource && <Image source={imageSource} style={styles.image} />}
+          <TouchableOpacity style={styles.button} onPress={() => postImage()}>
+            <Text style={styles.buttonText}>Post Image</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.title}>Edit Details</Text>
+
+        <Text style={styles.label}>First Name:</Text>
+        <TextInput
+          style={styles.input}
+          defaultValue={first_name}
+          placeholder={first_name}
+          value={first_name}
+          onChangeText={(text) => setFirstName(text)}
+        />
+        <Text style={styles.label}>Last Name:</Text>
+        <TextInput
+          style={styles.input}
+          defaultValue={last_name}
+          placeholder={last_name}
+          value={last_name}
+          onChangeText={(text) => setLastName(text)}
         />
 
-        {imageSource && <Image source={imageSource} style={styles.image} />}
-        <button style={styles.button} onClick={() => postImage()}>
-          Post Image{' '}
-        </button>
+        <Text style={styles.label}>Email:</Text>
+        <TextInput
+          style={styles.input}
+          defaultValue={email}
+          placeholder={email}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
+
+        <Text style={styles.label}>Password:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={password}
+          defaultValue={password}
+          value={password}
+          secureTextEntry={true}
+          onChangeText={(text) => setPassword(text)}
+        />
+
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Ionicons name="save" size={30} color="black" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="ios-backspace-sharp" size={30} color="black" />
+        </TouchableOpacity>
       </View>
-
-      <Text style={styles.title}>Edit Details</Text>
-
-      <Text style={styles.label}>First Name:</Text>
-      <TextInput
-        style={styles.input}
-        defaultValue={first_name}
-        placeholder={first_name}
-        value={first_name}
-        onChangeText={(text) => setFirstName(text)}
-      />
-      <Text style={styles.label}>Last Name:</Text>
-      <TextInput
-        style={styles.input}
-        defaultValue={last_name}
-        placeholder={last_name}
-        value={last_name}
-        onChangeText={(text) => setLastName(text)}
-      />
-
-      <Text style={styles.label}>Email:</Text>
-      <TextInput
-        style={styles.input}
-        defaultValue={email}
-        placeholder={email}
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-
-      <Text style={styles.label}>Password:</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={password}
-        defaultValue={password}
-        value={password}
-        secureTextEntry={true}
-        onChangeText={(text) => setPassword(text)}
-      />
-
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Ionicons name="save" size={30} color="black" />
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.buttonText}>Back</Text>
-      </TouchableOpacity>
-    </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: -1,
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#808000',
   },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#808000',
+    overflow: 'scroll',
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: '20',
+    marginTop: '50',
   },
   label: {
     fontSize: 16,
@@ -235,8 +256,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    marginTop: 20,
+    marginTop: 30,
     color: 'green',
+    marginBottom: 50,
   },
   buttonText: {
     color: 'black',
@@ -246,7 +268,7 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
-    marginTop: 20,
+    marginTop: 50,
   },
 })
 
