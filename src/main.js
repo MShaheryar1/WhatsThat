@@ -64,6 +64,17 @@ function Main({ navigation }) {
   return (
     <Tab.Navigator>
       <Tab.Screen
+        name="ChatsScreen"
+        component={ChatsScreen}
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Chats',
+          tabBarIcon: ({ size }) => (
+            <MaterialCommunityIcons name="chat" color="green" size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="ProfileScreen"
         component={ProfileScreen}
         options={({}) => ({
@@ -80,17 +91,6 @@ function Main({ navigation }) {
         initialParams={{ handleLogout: handleLogout }}
       ></Tab.Screen>
 
-      <Tab.Screen
-        name="ChatsScreen"
-        component={ChatsScreen}
-        options={{
-          headerShown: false,
-          tabBarLabel: 'Chats',
-          tabBarIcon: ({ size }) => (
-            <MaterialCommunityIcons name="chat" color="green" size={size} />
-          ),
-        }}
-      />
       <Tab.Screen
         name="ContactsScreen"
         component={ContactScreen}

@@ -3,31 +3,36 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 
-function ProfileScreen(Props) {
+function ProfileScreen(props) {
   const navigation = useNavigation()
+
   const handleUserDetails = () => {
     navigation.navigate('UserDetails')
   }
-  const EditUser = () => {
+
+  const handleEditUser = () => {
     navigation.navigate('EditUser')
   }
+
   const handleLogout = () => {
-    Props.route.params.handleLogout()
+    props.route.params.handleLogout()
     console.log('Logout is pressed')
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
+
       <TouchableOpacity style={styles.button} onPress={handleUserDetails}>
         <Text style={styles.buttonText}>User Details</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={EditUser}>
+
+      <TouchableOpacity style={styles.button} onPress={handleEditUser}>
         <Text style={styles.buttonText}>Edit Account</Text>
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
         <Ionicons name="log-out" size={30} color="black" />
-        {/* <Text style={styles.buttonText}>Logout</Text> */}
       </TouchableOpacity>
     </View>
   )
@@ -36,9 +41,9 @@ function ProfileScreen(Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#808000',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#808000',
   },
   title: {
     fontSize: 24,
@@ -47,16 +52,16 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: 'white',
-    padding: 10,
     borderRadius: 100,
-    paddingTop: 10,
-    marginVertical: 50,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginVertical: 20,
   },
   buttonText: {
-    color: '#black',
+    fontFamily: 'serif',
     fontSize: 16,
     fontWeight: 'bold',
-    fontFamily: 'serif',
+    color: 'black',
   },
 })
 
