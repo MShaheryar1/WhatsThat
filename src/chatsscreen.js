@@ -41,6 +41,9 @@ function ChatsScreen(props) {
   const viewChat = () => {
     navigation.navigate('Singlechat')
   }
+  const EditChat = () => {
+    navigation.navigate('EditChat')
+  }
 
   return (
     <View style={styles.container}>
@@ -51,6 +54,9 @@ function ChatsScreen(props) {
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={viewChat}>
             <Text style={styles.buttonText}>View Single Chat</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={EditChat}>
+            <Text style={styles.buttonText}>Edit Chat</Text>
           </TouchableOpacity>
         </View>
 
