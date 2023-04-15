@@ -17,6 +17,7 @@ import DeleteContact from './src/DeleteContact'
 import BlockContact from './src/BlockContact'
 import ViewBlocked from './src/ViewBlocked'
 import Unblock from './src/Unblock'
+import SearchUser from './src/SearchUser'
 
 const Stack = createNativeStackNavigator()
 
@@ -59,6 +60,7 @@ function App() {
         <Stack.Screen name="BlockContact" component={BlockContact} />
         <Stack.Screen name="ViewBlocked" component={ViewBlocked} />
         <Stack.Screen name="Unblock" component={Unblock} />
+        <Stack.Screen name="SearchUser" component={SearchUser} />
       </Stack.Navigator>
     </NavigationContainer>
   )

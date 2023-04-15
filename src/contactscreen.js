@@ -4,7 +4,9 @@ import { useNavigation } from '@react-navigation/native'
 
 function ContactScreen() {
   const navigation = useNavigation()
-
+  const SearchUser = () => {
+    navigation.navigate('SearchUser')
+  }
   const AddContact = () => {
     navigation.navigate('AddContact')
   }
@@ -26,6 +28,9 @@ function ContactScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Contacts Management </Text>
+      <TouchableOpacity style={styles.button} onPress={SearchUser}>
+        <Text style={styles.buttonText}>Search a User</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={AddContact}>
         <Text style={styles.buttonText}>Add Contact</Text>
       </TouchableOpacity>
