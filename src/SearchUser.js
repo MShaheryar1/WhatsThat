@@ -6,6 +6,7 @@ import {
   TextInput,
   Alert,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
@@ -52,9 +53,9 @@ function SearchUser() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.innerContainer}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>Search User</Text>
-        <View style={styles.inputView}>
+        <View style={styles.field}>
           <Ionicons name="ios-search" size={24} color="#444" />
           <TextInput
             style={styles.textInput}
@@ -63,28 +64,29 @@ function SearchUser() {
             onChangeText={handleQueryChange}
           />
         </View>
-        <TouchableOpacity style={styles.addButton} onPress={handleSearch}>
-          <Text style={styles.addButtonText}>Search</Text>
+        <TouchableOpacity style={styles.srchButton} onPress={handleSearch}>
+          <Text style={styles.srchButtonText}>Search</Text>
         </TouchableOpacity>
         {results.length > 0 && (
-          <View>
+          <View style={styles.resultsContainer}>
             {results.map((user) => (
-              <View key={user.user_id}>
-                <Text>
-                  {user.given_name} {user.family_name}
+              <View style={styles.container} key={user.user_id}>
+                <Text style={styles.contactName}>User ID: {user.user_id}</Text>
+                <Text style={styles.contactInfo}>
+                  Name: {user.given_name} {user.family_name}
                 </Text>
-                <Text>{user.email}</Text>
+                <Text style={styles.contactInfo}>Email: {user.email}</Text>
               </View>
             ))}
           </View>
         )}
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Ionicons name="ios-arrow-back" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
+        <Ionicons name="ios-arrow-back" size={24} color="white" />
+      </TouchableOpacity>
     </View>
   )
 }
@@ -94,54 +96,106 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#808000',
     padding: 20,
-    justifyContent: 'center',
     alignItems: 'center',
   },
-  innerContainer: {
-    flex: 1,
-    backgroundColor: 'white',
-    padding: 20,
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#808000',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#444',
+    color: 'white',
   },
-  inputView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f2f2f2',
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-  },
+
   textInput: {
     flex: 1,
     marginLeft: 10,
     fontSize: 18,
     color: '#444',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: '#f2f2f2',
   },
-  addButton: {
+
+  srchButton: {
     backgroundColor: 'white',
     borderRadius: 25,
     paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingHorizontal: 40,
     alignItems: 'center',
-    marginTop: 60,
+    marginTop: 40,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  addButtonText: {
-    color: 'black',
+  srchButtonText: {
+    color: '#444',
     fontSize: 18,
     fontWeight: 'bold',
   },
+
   backButton: {
     position: 'absolute',
     bottom: 20, // Updated position
-    left: 20,
+    left: 30,
     padding: 10,
+  },
+  contactName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: 'white', // Added color property
+  },
+  contactInfo: {
+    fontSize: 14,
+    color: 'white', // Added color property
+  },
+
+  field: {
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 5,
+    padding: 20,
+    marginTop: 40,
+    width: '90%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  resultsContainer: {
+    marginTop: 20,
+    width: '120',
+    backgroundColor: 'white',
+    padding: 5,
+    borderRadius: 10,
+    shadowColor: '#000',
+    marginBottom: 30,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
 })
 

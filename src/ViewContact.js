@@ -43,7 +43,7 @@ function ViewContact() {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView Style={styles.scrollContainer}>
         <Text style={styles.title}>Contacts</Text>
         <View style={styles.field}>
           {contactList.map((contact) => (
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#808000',
+    width: '100',
   },
   container: {
     flex: 1,
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 30,
     marginTop: 40,
-    width: '90%',
+    width: '90',
     justifyContent: 'center',
     alignItems: 'center',
     color: 'white',
