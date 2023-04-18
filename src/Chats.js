@@ -6,6 +6,7 @@ import {
   TextInput,
   Alert,
   TouchableOpacity,
+  FlatList,
 } from 'react-native'
 import { useNavigation, HeaderBackButton } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
@@ -13,7 +14,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 function Chats(props) {
   const navigation = useNavigation()
-  console.log(props, 'this is props')
   const [message, setMessage] = useState('')
   const [chatMessages, setChatMessages] = useState([])
   const [chat_id, setChatId] = useState(null)
@@ -43,7 +43,9 @@ function Chats(props) {
       console.log(data, 'this is data')
 
       if (response.ok) {
-        // handle success
+        setChatMessages([...chatMessages, { message: message }])
+        // reset message input field
+        setMessage('')
       } else {
         throw new Error('Failed to send message')
       }
@@ -52,22 +54,36 @@ function Chats(props) {
     }
   }
 
+  const renderChatMessage = ({ item }) => (
+    <View style={styles.message}>
+      <Text>{item.message}</Text>
+    </View>
+  )
+
   return (
     <View style={styles.container}>
-      <TextInput
-        value={message}
-        onChangeText={setMessage}
-        placeholder="Type your message"
-        style={styles.input}
+      <FlatList
+        data={chatMessages}
+        renderItem={renderChatMessage}
+        keyExtractor={(item, index) => index.toString()}
+        style={styles.messagesList}
       />
-      <TouchableOpacity onPress={sendMessage}>
-        <Ionicons name="send" size={24} color="yellow" />
-      </TouchableOpacity>
+      <View style={styles.inputContainer}>
+        <TextInput
+          value={message}
+          onChangeText={setMessage}
+          placeholder="Type your message"
+          style={styles.input}
+        />
+        <TouchableOpacity onPress={sendMessage}>
+          <Ionicons name="send" size={24} color="yellow" />
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity
-        style={styles.button}
+        style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Ionicons name="ios-backspace-sharp" size={30} color="black" />
+        <Ionicons name="ios-arrow-back" size={24} color="#000000" />
       </TouchableOpacity>
     </View>
   )
@@ -76,28 +92,68 @@ function Chats(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#808000',
+    backgroundColor: '#E5E5E5',
     padding: 20,
+    justifyContent: 'flex-end',
+    marginTop: 40,
+  },
+  inputContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 20,
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 5,
     padding: 10,
+    flex: 1,
+    marginRight: 10,
+  },
+  button: {
+    backgroundColor: '#F9BF3B',
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  messagesList: {
+    flex: 1,
     width: '100%',
     marginBottom: 20,
   },
-  headerTitle: {
-    fontSize: 20,
-    color: '#fff',
-  },
   message: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 5,
-
     padding: 10,
-    width: '100%',
     marginBottom: 10,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 0,
+    left: 20,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 50,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  backButtonText: {
+    fontSize: 20,
+    color: '#000000',
+    fontWeight: 'bold',
   },
 })
 

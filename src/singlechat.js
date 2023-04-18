@@ -109,7 +109,7 @@ function Singlechat() {
             <Text style={styles.label}> Last Message</Text>
             <TextInput
               style={styles.input}
-              value={chat.messages}
+              value={chat.messages.message[0]}
               editable={false}
             />
           </View>
