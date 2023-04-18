@@ -40,8 +40,8 @@ function ChatsScreen(props) {
   const EditChat = () => {
     navigation.navigate('EditChat')
   }
-  const Chats = () => {
-    navigation.navigate('Chats')
+  const Chats = (chat_id) => {
+    navigation.navigate('Chats', chat_id)
   }
   return (
     <View style={styles.container}>
@@ -60,9 +60,12 @@ function ChatsScreen(props) {
           <Text style={styles.title}>List of Chats</Text>
           {chatList.map((chat) => (
             <TouchableOpacity
-              key={chat.id}
+              key={chat.chat_id}
               style={styles.chatContainer}
-              onPress={() => Chats(chat.id)}
+              onPress={() => {
+                console.log(chat.chat_id, 'saath comment')
+                return Chats(chat.chat_id)
+              }}
             >
               <Text style={styles.chatName}>{chat.name}</Text>
               <Text style={styles.chatCreator}>

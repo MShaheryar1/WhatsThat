@@ -11,18 +11,21 @@ import { useNavigation, HeaderBackButton } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-function Chats({ props }) {
+function Chats(props) {
   const navigation = useNavigation()
   console.log(props, 'this is props')
   const [message, setMessage] = useState('')
   const [chatMessages, setChatMessages] = useState([])
   const [chat_id, setChatId] = useState(null)
+
+  useEffect(() => {
+    console.log(props.route.params, 'WWWWW')
+    setChatId(props.route.params)
+  }, [])
+
   const sendMessage = async () => {
-    console.log(navigation.props)
-
+    console.log(message, 'this is message')
     try {
-      console.log(chat_id, 'this is chat_id')
-
       const token = await AsyncStorage.getItem('@token')
       const response = await fetch(
         'http://localhost:3333/api/1.0.0/chat/' + chat_id + '/message',
@@ -35,13 +38,12 @@ function Chats({ props }) {
           body: JSON.stringify({ message }),
         }
       )
-      if (response.ok) {
-        const data = await response.json()
-        setChatMessages(data)
-        setChatId(data[0].chat_id)
+      const data = response.status
 
+      console.log(data, 'this is data')
+
+      if (response.ok) {
         // handle success
-        setMessage('')
       } else {
         throw new Error('Failed to send message')
       }
@@ -50,17 +52,8 @@ function Chats({ props }) {
     }
   }
 
-  useEffect(() => {
-    setChatMessages([])
-  }, [])
-
   return (
     <View style={styles.container}>
-      {chatMessages.map((chatMessage) => (
-        <Text key={chatMessage.id} style={styles.message}>
-          {chatMessage.message}
-        </Text>
-      ))}
       <TextInput
         value={message}
         onChangeText={setMessage}
@@ -68,7 +61,7 @@ function Chats({ props }) {
         style={styles.input}
       />
       <TouchableOpacity onPress={sendMessage}>
-        <Ionicons name="send" size={24} color="white" />
+        <Ionicons name="send" size={24} color="yellow" />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
