@@ -38,6 +38,7 @@ function Singlechat() {
         console.log(data.creator, 'data creator')
         console.log(data.members, 'data members')
         console.log(data.messages, 'data messages')
+        console.log(chat.messages[0], 'data messages')
 
         // console.log(data, 'this is data')
 
@@ -109,7 +110,7 @@ function Singlechat() {
             <Text style={styles.label}> Last Message</Text>
             <TextInput
               style={styles.input}
-              value={chat.messages}
+              value={chat.messages[-1]}
               editable={false}
             />
           </View>
