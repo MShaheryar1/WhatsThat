@@ -41,8 +41,9 @@ function ChatsScreen(props) {
     navigation.navigate('EditChat')
   }
   const Chats = (chat_id) => {
-    navigation.navigate('Chats', chat_id)
+    navigation.navigate('Chats', { chat_id: chat_id })
   }
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -63,7 +64,7 @@ function ChatsScreen(props) {
               key={chat.chat_id}
               style={styles.chatContainer}
               onPress={() => {
-                console.log(chat.chat_id, 'saath comment')
+                console.log(chat.chat_id)
                 return Chats(chat.chat_id)
               }}
             >

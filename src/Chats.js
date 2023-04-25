@@ -19,7 +19,7 @@ function Chats(props) {
   const [chat_id, setChatId] = useState(null)
 
   useEffect(() => {
-    console.log(props.route.params, 'WWWWW')
+    console.log(props.route.params, 'chatId')
     setChatId(props.route.params)
   }, [])
 
@@ -59,6 +59,9 @@ function Chats(props) {
       <Text>{item.message}</Text>
     </View>
   )
+  const goToAddMember = (chat_id) => {
+    navigation.navigate('AddMember', { chat_id: chat_id })
+  }
 
   return (
     <View style={styles.container}>
@@ -77,6 +80,9 @@ function Chats(props) {
         />
         <TouchableOpacity onPress={sendMessage}>
           <Ionicons name="send" size={24} color="yellow" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={goToAddMember}>
+          <Text>Add a User</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity
