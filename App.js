@@ -14,6 +14,7 @@ import Singlechat from './src/Singlechat'
 import EditChat from './src/EditChat'
 import Chats from './src/Chats'
 import AddMember from './src/AddMember'
+import DeleteUser from './src/DeleteUser'
 
 const Stack = createNativeStackNavigator()
 
@@ -53,6 +54,7 @@ function App() {
         <Stack.Screen name="EditChat" component={EditChat} />
         <Stack.Screen name="Chats" component={Chats} />
         <Stack.Screen name="AddMember" component={AddMember} />
+        <Stack.Screen name="DeleteUser" component={DeleteUser} />
       </Stack.Navigator>
     </NavigationContainer>
   )

@@ -62,6 +62,9 @@ function Chats(props) {
   const AddMember = (chat_id) => {
     navigation.navigate('AddMember', { chat_id: chat_id })
   }
+  const DeleteUser = (chat_id) => {
+    navigation.navigate('DeleteUser', { chat_id: chat_id })
+  }
 
   return (
     <View style={styles.container}>
@@ -86,6 +89,12 @@ function Chats(props) {
           onPress={() => AddMember(chat_id.chat_id)}
         >
           <Text>Add a User</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => DeleteUser(chat_id.chat_id)}
+        >
+          <Text>Delete a User</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity

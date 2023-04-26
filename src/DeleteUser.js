@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-function AddMember(props) {
+function DeleteUser(props) {
   const [user_id, setUserId] = useState('')
   const [chat_id, setChatId] = useState('')
   useEffect(() => {
@@ -30,7 +30,7 @@ function AddMember(props) {
       }
 
       fetch(`http://localhost:3333/api/1.0.0/chat/${chat_id}/user/${user_id}`, {
-        method: 'POST',
+        method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
           'X-Authorization': token,
@@ -55,7 +55,7 @@ function AddMember(props) {
         />
       </View>
       <TouchableOpacity style={styles.button} onPress={Add}>
-        <Text style={styles.buttonText}>Add</Text>
+        <Text style={styles.buttonText}>Delete</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
@@ -93,4 +93,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 })
-export default AddMember
+export default DeleteUser
