@@ -9,13 +9,16 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native'
+
 function AddMember(props) {
   const [user_id, setUserId] = useState('')
-  const [chat_id, setChatId] = useState(props)
+  const [chat_id, setChatId] = useState('')
   useEffect(() => {
-    console.log(props.route.params, 'chat_id')
-    setChatId(props.route.params)
+    console.log(props.route.params, 'chatId')
+    setChatId(props.route.params.chat_id)
+    console.log(chat_id, 'chat iddd')
   }, [])
+
   const navigation = useNavigation()
   const Add = async () => {
     try {

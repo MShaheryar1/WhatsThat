@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native'
-import { useNavigation, HeaderBackButton } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -59,7 +59,7 @@ function Chats(props) {
       <Text>{item.message}</Text>
     </View>
   )
-  const goToAddMember = (chat_id) => {
+  const AddMember = (chat_id) => {
     navigation.navigate('AddMember', { chat_id: chat_id })
   }
 
@@ -81,7 +81,10 @@ function Chats(props) {
         <TouchableOpacity onPress={sendMessage}>
           <Ionicons name="send" size={24} color="yellow" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={goToAddMember}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => AddMember(chat_id.chat_id)}
+        >
           <Text>Add a User</Text>
         </TouchableOpacity>
       </View>
