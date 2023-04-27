@@ -16,34 +16,33 @@ function Chats(props) {
   const navigation = useNavigation()
   const [message, setMessage] = useState('')
   const [chatMessages, setChatMessages] = useState([])
-  const [chat_id, setChatId] = useState({})
+  const [chatId, setChatId] = useState(props.route.params.chat_id)
+  const [chat, setChat] = useState({ messages: [{}] })
 
   useEffect(() => {
-    setChatId(props.route.params)
     fetchMessages()
   }, [])
 
   const fetchMessages = async () => {
-    try {
-      const token = await AsyncStorage.getItem('@token')
-      console.log(props.route.params, 'chat_id')
-      const response = await fetch(
-        `http://localhost:3333/api/1.0.0/chat/
-          ${this.props.route.params.chat_id}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Authorization': token,
-          },
-        }
-      )
-      const data = await response.json()
-      setChatMessages(data)
-      console.log(response, 'res')
-    } catch (error) {
-      Alert.alert('Error', error.message)
-    }
+    const token = await AsyncStorage.getItem('@token')
+    console.log(chatId, 'chatid')
+    fetch('http://localhost:3333/api/1.0.0/chat/' + chatId, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Authorization': token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data, 'data')
+        setChat(data)
+        console.log(data.creator, 'data creator')
+        console.log(data.members, 'data members')
+        console.log(data.messages, 'data messages')
+      })
+
+      .catch((error) => console.log(error))
   }
 
   const sendMessage = async () => {
@@ -51,7 +50,7 @@ function Chats(props) {
     try {
       const token = await AsyncStorage.getItem('@token')
       const response = await fetch(
-        'http://localhost:3333/api/1.0.0/chat/' + chat_id.chat_id + '/message',
+        'http://localhost:3333/api/1.0.0/chat/' + chatId + '/message',
         {
           method: 'POST',
           headers: {
@@ -68,6 +67,7 @@ function Chats(props) {
 
       if (response.ok) {
         setChatMessages([...chatMessages, { message: message }])
+        console.log(chatMessages, 'message')
         // reset message input field
         setMessage('')
       } else {
@@ -80,12 +80,15 @@ function Chats(props) {
 
   const renderChatMessage = ({ item }) => (
     <View style={styles.message}>
-      <Text>{item.message}</Text>
+      <Text>{item.text}</Text>
     </View>
   )
+
   const AddMember = (chat_id) => {
+    console.log(chat_id, 'chat_id')
     navigation.navigate('AddMember', { chat_id: chat_id })
   }
+
   const DeleteUser = (chat_id) => {
     navigation.navigate('DeleteUser', { chat_id: chat_id })
   }
@@ -110,13 +113,13 @@ function Chats(props) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => AddMember(chat_id.chat_id)}
+          onPress={() => AddMember(chat_id)}
         >
-          <Text>Add a User</Text>
+          <Text>Add User</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => DeleteUser(chat_id.chat_id)}
+          onPress={() => DeleteUser(chat_id)}
         >
           <Text>Delete a User</Text>
         </TouchableOpacity>

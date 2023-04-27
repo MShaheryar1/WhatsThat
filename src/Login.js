@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
 import { useNavigation } from '@react-navigation/native'
+
 import {
   StyleSheet,
   Text,
@@ -16,7 +16,6 @@ export default function Login() {
   const navigation = useNavigation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [token, setToken] = useState(null)
 
   const fetchUser = async () => {
     try {
@@ -66,6 +65,17 @@ export default function Login() {
     }
   }
 
+  const checkLoggedIn = async () => {
+    const value = await AsyncStorage.getItem('@token')
+    if (value !== null) {
+      navigation.navigate('Main')
+    }
+  }
+
+  useEffect(() => {
+    checkLoggedIn()
+  }, [])
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -106,9 +116,11 @@ export default function Login() {
     </View>
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
     backgroundColor: '#808000',
     alignItems: 'center',
     justifyContent: 'center',

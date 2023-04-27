@@ -14,7 +14,7 @@ function AddMember(props) {
   const [user_id, setUserId] = useState('')
   const [chat_id, setChatId] = useState('')
   useEffect(() => {
-    console.log(props.route.params, 'chatId')
+    console.log(props, 'chatId')
     setChatId(props.route.params.chat_id)
     console.log(chat_id, 'chat iddd')
   }, [])

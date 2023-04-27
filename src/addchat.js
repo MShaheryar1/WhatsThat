@@ -22,7 +22,7 @@ function Addchat() {
         body: JSON.stringify({ name }),
       })
       const data = await response.json()
-      console.log(data, ' this is data')
+      console.log(data, ' new Chat')
       //   setUser(data)
       await AsyncStorage.setItem('user', data)
     } catch (error) {
