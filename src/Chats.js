@@ -19,28 +19,51 @@ function Chats(props) {
   const [chat_id, setChatId] = useState({})
 
   useEffect(() => {
-    console.log(props.route.params, 'chatId')
     setChatId(props.route.params)
+    fetchMessages()
   }, [])
+
+  const fetchMessages = async () => {
+    try {
+      const token = await AsyncStorage.getItem('@token')
+      console.log(props.route.params, 'chat_id')
+      const response = await fetch(
+        'http://localhost:3333/api/1.0.0/chat/' +
+          this.props.route.params.chat_id,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': token,
+          },
+        }
+      )
+      const data = await response.json()
+      setChatMessages(data)
+    } catch (error) {
+      Alert.alert('Error', error.message)
+    }
+  }
 
   const sendMessage = async () => {
     console.log(message, 'this is message')
     try {
       const token = await AsyncStorage.getItem('@token')
       const response = await fetch(
-        'http://localhost:3333/api/1.0.0/chat/' + chat_id + '/message',
+        'http://localhost:3333/api/1.0.0/chat/' + chat_id.chat_id + '/message',
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'X-Authorization': token,
           },
-          body: JSON.stringify({ message }),
+          body: JSON.stringify({ message: message }),
         }
       )
       const data = response.status
 
       console.log(data, 'this is data')
+      console.log(message, 'this is messages')
 
       if (response.ok) {
         setChatMessages([...chatMessages, { message: message }])

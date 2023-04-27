@@ -35,7 +35,11 @@ function AddMember(props) {
           'X-Authorization': token,
         },
       })
-        .then(async (response) => response.json())
+        .then(async (response) => {
+          const responseBody = await response.text()
+          console.log(responseBody) // log response body
+          // return response.json()
+        })
         .then((data) => console.log(data, 'this is data'))
     } catch (error) {
       console.log(error)

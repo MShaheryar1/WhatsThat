@@ -50,7 +50,7 @@ function App() {
           })}
         />
         <Stack.Screen name="Addchat" component={Addchat} />
-        <Stack.Screen name="Singlechat" component={Singlechat} />
+        {/* <Stack.Screen name="Singlechat" component={Singlechat} /> */}
         <Stack.Screen name="EditChat" component={EditChat} />
         <Stack.Screen name="Chats" component={Chats} />
         <Stack.Screen name="AddMember" component={AddMember} />
