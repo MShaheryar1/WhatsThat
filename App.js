@@ -9,6 +9,7 @@ import Signup from './src/Signup';
 import Main from './src/main';
 import UserDetails from './src/UserDetails';
 import EditUser from './src/EditUser';
+import addchat from './src/addchat';
 
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,7 @@ function App() {
             ),
           })}
         />
+        <Stack.Screen name="addchat" component={addchat}/>
       </Stack.Navigator>
     </NavigationContainer>
 

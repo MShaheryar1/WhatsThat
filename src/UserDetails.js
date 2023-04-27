@@ -3,10 +3,35 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 function UserDetails ({ token, navigation }) {
   const [user, setUser] = useState(null);
+  const [imageSrc, setImageSrc]= useState(null);
 
   useEffect(() => {
+    const fetchImage =async() =>{
+      const id = await AsyncStorage.getItem('@id');
+      const token = await AsyncStorage.getItem('@token');
+
+      const response = await fetch('http://localhost:3333/api/1.0.0/user/' +id+ '/photo', {
+        method:'GET',
+      headers: {
+        "X-Authorization":  token,
+        Accept: 'image/png',
+      }
+    });
+    const blob = await response.blob();
+    
+  console.log('Image blob:', blob, 'Type:', blob.type);
+
+  const url = URL.createObjectURL(blob);
+  console.log('Image URL:', url);
+
+    setImageSrc(URL.createObjectURL(blob))
+    console.log(imageSrc, " kkkkkkkk")
+    
+    }
+  fetchImage();
     const fetchUser = async () => {
       try {
         const token = await AsyncStorage.getItem('@token');
@@ -18,6 +43,7 @@ function UserDetails ({ token, navigation }) {
             "X-Authorization":  token,
             "Content-Type": "application/json",
           }
+
         });
         const data = await response.json();
         console.log(data, " this is data")
@@ -36,10 +62,8 @@ function UserDetails ({ token, navigation }) {
 
   return (
     <View style={styles.container}>
-         <Image
-        source={require('./assets/whatsthat.png')}
-        style={{ width: 100, height: 100, display: 'flex', marginLeft: 30, marginBottom: 30, }}
-      />
+     
+      <img style={{ width: 100, height: 100, display: 'flex', marginLeft: 30, marginBottom: 30, }} src={imageSrc}></img>
       <Text style={styles.title}>Account Details</Text>
       <Text style={styles.label}>ID:</Text>
       {user.user_id && <TextInput style={styles.input} value={user.user_id.toString()} editable={false} />}
