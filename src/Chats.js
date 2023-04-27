@@ -28,8 +28,8 @@ function Chats(props) {
       const token = await AsyncStorage.getItem('@token')
       console.log(props.route.params, 'chat_id')
       const response = await fetch(
-        'http://localhost:3333/api/1.0.0/chat/' +
-          this.props.route.params.chat_id,
+        `http://localhost:3333/api/1.0.0/chat/
+          ${this.props.route.params.chat_id}`,
         {
           method: 'GET',
           headers: {
@@ -40,6 +40,7 @@ function Chats(props) {
       )
       const data = await response.json()
       setChatMessages(data)
+      console.log(response, 'res')
     } catch (error) {
       Alert.alert('Error', error.message)
     }
