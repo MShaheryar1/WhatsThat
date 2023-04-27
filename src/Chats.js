@@ -16,7 +16,7 @@ function Chats(props) {
   const navigation = useNavigation()
   const [message, setMessage] = useState('')
   const [chatMessages, setChatMessages] = useState([])
-  const [chat_id, setChatId] = useState(null)
+  const [chat_id, setChatId] = useState({})
 
   useEffect(() => {
     console.log(props.route.params, 'chatId')

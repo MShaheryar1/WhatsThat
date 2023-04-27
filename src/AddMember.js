@@ -32,7 +32,6 @@ function AddMember(props) {
       fetch(`http://localhost:3333/api/1.0.0/chat/${chat_id}/user/${user_id}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'X-Authorization': token,
         },
       })

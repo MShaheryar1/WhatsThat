@@ -41,7 +41,8 @@ function ChatsScreen(props) {
     navigation.navigate('EditChat')
   }
   const Chats = (chat_id) => {
-    navigation.navigate('Chats', { chat_id: chat_id })
+    // navigation.navigate('Chats', { chat_id: chat_id })
+    navigation.navigate('Chats', { chat_id })
   }
 
   return (

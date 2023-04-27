@@ -38,14 +38,6 @@ function Singlechat() {
         console.log(data.creator, 'data creator')
         console.log(data.members, 'data members')
         console.log(data.messages, 'data messages')
-
-        // console.log(data, 'this is data')
-
-        // console.log(typeof data)
-        // console.log(data[creator], 'hello sherry')
-        // console.log(Object.keys(data))
-        // console.log(data.creator, ' data creator')
-        // console.log(chat.creator, 'chat creator')
       })
       .catch((error) => console.log(error))
   }
