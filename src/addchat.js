@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Ionicons } from '@expo/vector-icons'
 
-function addchat() {
+function Addchat() {
   const [name, setName] = useState(name)
+  const navigation = useNavigation()
 
   const addtochat = async () => {
     try {
@@ -32,18 +34,25 @@ function addchat() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Add chat</Text>
-      <Text style={styles.label}>Name:</Text>
-      <TextInput
-        style={styles.input}
-        defaultValue={name}
-        placeholder={name}
-        value={name}
-        onChangeText={(text) => setName(text)}
-      />
-      <TouchableOpacity style={styles.button} onPress={addtochat}>
-        <Text style={styles.buttonText}>Add chat</Text>
-      </TouchableOpacity>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Text style={styles.title}>Create chat</Text>
+        <TextInput
+          style={styles.input}
+          defaultValue={name}
+          placeholder={'Enter Chat Name'}
+          value={name}
+          onChangeText={(text) => setName(text)}
+        />
+        <TouchableOpacity style={styles.button} onPress={addtochat}>
+          <Text style={styles.buttonText}>create chat</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="ios-backspace-sharp" size={30} color="black" />
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   )
 }
@@ -60,6 +69,28 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
   },
+  button: {
+    backgroundColor: 'white',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 20,
+    color: 'green',
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  label: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  input: {
+    placeholder: {
+      fontSize: 20,
+    },
+  },
 })
 
-export default addchat
+export default Addchat
