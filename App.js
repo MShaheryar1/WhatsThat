@@ -11,13 +11,10 @@ import UserDetails from './src/UserDetails'
 import EditUser from './src/EditUser'
 import Addchat from './src/Addchat'
 import Singlechat from './src/Singlechat'
-import AddContact from './src/AddContact'
-import ViewContact from './src/ViewContact'
-import DeleteContact from './src/DeleteContact'
-import BlockContact from './src/BlockContact'
-import ViewBlocked from './src/ViewBlocked'
-import Unblock from './src/Unblock'
-import SearchUser from './src/SearchUser'
+import EditChat from './src/EditChat'
+import Chats from './src/Chats'
+import AddMember from './src/AddMember'
+import DeleteUser from './src/DeleteUser'
 
 const Stack = createNativeStackNavigator()
 
@@ -54,13 +51,10 @@ function App() {
         />
         <Stack.Screen name="Addchat" component={Addchat} />
         <Stack.Screen name="Singlechat" component={Singlechat} />
-        <Stack.Screen name="AddContact" component={AddContact} />
-        <Stack.Screen name="ViewContact" component={ViewContact} />
-        <Stack.Screen name="DeleteContact" component={DeleteContact} />
-        <Stack.Screen name="BlockContact" component={BlockContact} />
-        <Stack.Screen name="ViewBlocked" component={ViewBlocked} />
-        <Stack.Screen name="Unblock" component={Unblock} />
-        <Stack.Screen name="SearchUser" component={SearchUser} />
+        <Stack.Screen name="EditChat" component={EditChat} />
+        <Stack.Screen name="Chats" component={Chats} />
+        <Stack.Screen name="AddMember" component={AddMember} />
+        <Stack.Screen name="DeleteUser" component={DeleteUser} />
       </Stack.Navigator>
     </NavigationContainer>
   )
