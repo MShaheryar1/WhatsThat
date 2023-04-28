@@ -7,6 +7,7 @@ import {
   Alert,
   TouchableOpacity,
   FlatList,
+  Modal,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
@@ -18,6 +19,7 @@ function Chats(props) {
   const [chatMessages, setChatMessages] = useState([])
   const [chatId, setChatId] = useState(props.route.params.chat_id)
   const [chat, setChat] = useState({ messages: [{}] })
+  const [modalVisible, setModalVisible] = useState(false)
 
   useEffect(() => {
     fetchMessages()
@@ -37,8 +39,8 @@ function Chats(props) {
       .then((data) => {
         console.log(data, 'data')
         setChat(data)
-        console.log(data.creator, 'data creator')
-        console.log(data.members, 'data members')
+        setChatMessages(data.messages)
+
         console.log(data.messages, 'data messages')
       })
 
@@ -67,6 +69,7 @@ function Chats(props) {
 
       if (response.ok) {
         setChatMessages([...chatMessages, { message: message }])
+
         console.log(chatMessages, 'message')
         // reset message input field
         setMessage('')
@@ -78,10 +81,18 @@ function Chats(props) {
     }
   }
 
+  const handleLongPress = (item) => {
+    console.log('Item long pressed:', item)
+    setModalVisible(true)
+  }
+
   const renderChatMessage = ({ item }) => (
-    <View style={styles.message}>
-      <Text>{item.text}</Text>
-    </View>
+    <TouchableOpacity
+      onLongPress={() => handleLongPress(item)}
+      style={styles.message}
+    >
+      <Text>{item.message}</Text>
+    </TouchableOpacity>
   )
 
   const AddMember = (chat_id) => {
@@ -98,9 +109,12 @@ function Chats(props) {
       <FlatList
         data={chatMessages}
         renderItem={renderChatMessage}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(data, index) => index}
         style={styles.messagesList}
       />
+      <Modal visible={modalVisible}>{/* Add your modal content here */}</Modal>
+      {/* Rest of your code */}
+
       <View style={styles.inputContainer}>
         <TextInput
           value={message}
@@ -113,13 +127,13 @@ function Chats(props) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => AddMember(chat_id)}
+          onPress={() => AddMember(chatId)}
         >
           <Text>Add User</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => DeleteUser(chat_id)}
+          onPress={() => DeleteUser(chatId)}
         >
           <Text>Delete a User</Text>
         </TouchableOpacity>

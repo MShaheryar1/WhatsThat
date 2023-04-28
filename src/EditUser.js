@@ -193,7 +193,7 @@ function EditUser({ navigation }) {
         <Text style={styles.label}>Password:</Text>
         <TextInput
           style={styles.input}
-          placeholder={password}
+          placeholder={'Enter your Password'}
           defaultValue={password}
           value={password}
           secureTextEntry={true}

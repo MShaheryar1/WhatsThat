@@ -35,13 +35,11 @@ function DeleteUser(props) {
           'Content-Type': 'application/json',
           'X-Authorization': token,
         },
+      }).then(async (response) => {
+        const responseBody = await response.text()
+        console.log(responseBody) // log response body
+        // return response.json()
       })
-        .then(async (response) => {
-          const responseBody = await response.text()
-          console.log(responseBody) // log response body
-          // return response.json()
-        })
-        .then((data) => console.log(data, 'this is data'))
     } catch (error) {
       console.log(error)
     }
