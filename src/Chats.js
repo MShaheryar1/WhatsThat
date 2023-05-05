@@ -174,17 +174,17 @@ function Chats(props) {
           placeholder="Type your message"
           style={styles.input}
         />
-        <TouchableOpacity onPress={sendMessage}>
+        <TouchableOpacity onPress={sendMessage} style={styles.send}>
           <Ionicons name="send" size={24} color="yellow" />
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.button}
+          style={styles.buttonA}
           onPress={() => AddMember(chatId)}
         >
           <Text>Add User</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.button}
+          style={styles.buttonB}
           onPress={() => DeleteUser(chatId)}
         >
           <Text>Delete a User</Text>
@@ -206,7 +206,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#808000',
     padding: 20,
     justifyContent: 'flex-end',
-    marginTop: 40,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -219,22 +218,46 @@ const styles = StyleSheet.create({
     padding: 10,
     flex: 1,
     marginRight: 10,
+    marginBottom: 30,
   },
   button: {
-    backgroundColor: '#FFFFFF', // Change background color
-    borderRadius: 10, // Increase border radius
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
     paddingVertical: 12,
     paddingHorizontal: 20,
-    marginHorizontal: 5, // Add some margin between buttons
+    marginHorizontal: 5,
   },
   buttonText: {
     color: '#808000',
-    fontWeight: 'bold', // Add bold text style
+    fontWeight: 'bold',
+  },
+  buttonA: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    marginHorizontal: 5,
+    marginTop: 80,
+    marginBottom: 20,
+    position: 'absolute',
+  },
+  buttonB: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    marginHorizontal: 5,
+    marginTop: 80,
+    marginBottom: 20,
+
+    position: 'absolute',
+    marginLeft: 110,
   },
   messagesList: {
     flex: 1,
     width: '100%',
     marginBottom: 20,
+    marginTop: 80,
   },
   message: {
     backgroundColor: '#FFFFFF',
@@ -244,7 +267,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 0,
+    top: 40, // Change top value
     left: 20,
     backgroundColor: '#FFFFFF',
     borderRadius: 50,
@@ -260,6 +283,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  send: {
+    marginBottom: 29,
   },
   backButtonText: {
     fontSize: 20,

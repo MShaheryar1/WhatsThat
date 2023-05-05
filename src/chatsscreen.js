@@ -51,9 +51,9 @@ function ChatsScreen(props) {
         <TouchableOpacity style={styles.button} onPress={Addchat}>
           <Text style={styles.buttonText}>Create Chat</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={Singlechat}>
+        {/* <TouchableOpacity style={styles.button} onPress={Singlechat}>
           <Text style={styles.buttonText}>View Single Chat</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity style={styles.button} onPress={EditChat}>
           <Text style={styles.buttonText}>Edit Chat</Text>
         </TouchableOpacity>
