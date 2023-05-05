@@ -17,6 +17,8 @@ function Chats(props) {
   const navigation = useNavigation()
   const [message, setMessage] = useState('')
   const [chatMessages, setChatMessages] = useState([])
+  const [messageId, setMessageId] = useState([])
+
   const [chatId, setChatId] = useState(props.route.params.chat_id)
   const [chat, setChat] = useState({ messages: [{}] })
   const [modalVisible, setModalVisible] = useState(false)
@@ -84,6 +86,40 @@ function Chats(props) {
   const handleLongPress = (item) => {
     console.log('Item long pressed:', item)
     setModalVisible(true)
+    setMessageId(item.message_id) // set the message_id in state
+  }
+
+  const Deletemessage = async () => {
+    try {
+      const token = await AsyncStorage.getItem('@token')
+      const response = await fetch(
+        'http://localhost:3333/api/1.0.0/chat/' +
+          chatId +
+          '/message/' +
+          messageId,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': token,
+          },
+        }
+      )
+      const data = response.status
+
+      console.log(data, 'this is data')
+
+      if (response.ok) {
+        // remove the deleted message from the state
+        setChatMessages(
+          chatMessages.filter((msg) => msg.message_id !== messageId)
+        )
+      } else {
+        throw new Error('Failed to delete message')
+      }
+    } catch (error) {
+      Alert.alert('Error', error.message)
+    }
   }
 
   const renderChatMessage = ({ item }) => (
@@ -112,8 +148,24 @@ function Chats(props) {
         keyExtractor={(data, index) => index}
         style={styles.messagesList}
       />
-      <Modal visible={modalVisible}>{/* Add your modal content here */}</Modal>
-      {/* Rest of your code */}
+      <Modal visible={modalVisible}>
+        <View style={styles.modalContainer}>
+          <TouchableOpacity onPress={() => setModalVisible(false)}>
+            <Ionicons name="close-circle-outline" size={24} color="#000000" />
+          </TouchableOpacity>
+          <View style={styles.modalContent}>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={Deletemessage}
+            >
+              <Text style={styles.buttonText}>Delete Message</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.modalButton}>
+              <Text style={styles.buttonText}>Edit Message</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       <View style={styles.inputContainer}>
         <TextInput
@@ -151,7 +203,7 @@ function Chats(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E5E5E5',
+    backgroundColor: '#808000',
     padding: 20,
     justifyContent: 'flex-end',
     marginTop: 40,
@@ -169,15 +221,15 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   button: {
-    backgroundColor: '#F9BF3B',
-    borderRadius: 5,
-    paddingVertical: 10,
+    backgroundColor: '#FFFFFF', // Change background color
+    borderRadius: 10, // Increase border radius
+    paddingVertical: 12,
     paddingHorizontal: 20,
+    marginHorizontal: 5, // Add some margin between buttons
   },
   buttonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    fontSize: 16,
+    color: '#808000',
+    fontWeight: 'bold', // Add bold text style
   },
   messagesList: {
     flex: 1,
@@ -213,6 +265,33 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#000000',
     fontWeight: 'bold',
+  },
+  modalContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '80%',
+    height: '25%',
+    marginTop: '70%',
+  },
+  modalContent: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalButton: {
+    backgroundColor: '#808000',
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 })
 
