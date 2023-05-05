@@ -21,6 +21,8 @@ function Chats(props) {
 
   const [chatId, setChatId] = useState(props.route.params.chat_id)
   const [chat, setChat] = useState({ messages: [{}] })
+  const [editFormVisible, setEditFormVisible] = useState(false)
+
   const [modalVisible, setModalVisible] = useState(false)
 
   useEffect(() => {
@@ -160,9 +162,22 @@ function Chats(props) {
             >
               <Text style={styles.buttonText}>Delete Message</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.modalButton}>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => setEditFormVisible(true)}
+            >
               <Text style={styles.buttonText}>Edit Message</Text>
             </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      <Modal visible={editFormVisible}>
+        <View style={styles.modalContainer}>
+          <TouchableOpacity onPress={() => setEditFormVisible(false)}>
+            <Ionicons name="close-circle-outline" size={24} color="#000000" />
+          </TouchableOpacity>
+          <View style={styles.modalContent}>
+            {/* Add your form components here */}
           </View>
         </View>
       </Modal>

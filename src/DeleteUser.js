@@ -20,7 +20,7 @@ function DeleteUser(props) {
   }, [])
 
   const navigation = useNavigation()
-  const Add = async () => {
+  const DeleteM = async () => {
     try {
       const token = await AsyncStorage.getItem('@token')
 
@@ -48,22 +48,24 @@ function DeleteUser(props) {
   return (
     <View style={styles.container}>
       <View style={styles.inputView}>
-        <Text style={styles.title}>Enter ID </Text>
+        <Text style={styles.title}>Enter User ID</Text>
         <TextInput
-          style={styles.TextInput}
+          style={styles.input}
           placeholder="Enter user ID"
-          placeholderTextColor="#003f5c"
+          placeholderTextColor="#ccc"
           onChangeText={(user_id) => setUserId(user_id)}
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={Add}>
-        <Text style={styles.buttonText}>Delete</Text>
+
+      <TouchableOpacity style={styles.button} onPress={DeleteM}>
+        <Text style={styles.buttonText}>Delete </Text>
       </TouchableOpacity>
+
       <TouchableOpacity
-        style={styles.button}
+        style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Ionicons name="ios-backspace-sharp" size={30} color="black" />
+        <Ionicons name="ios-arrow-back" size={24} color="white" />
       </TouchableOpacity>
     </View>
   )
@@ -72,27 +74,46 @@ function DeleteUser(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#808000',
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingTop: 200,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
   },
+  inputView: {
+    marginBottom: 30,
+  },
+  input: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    fontSize: 16,
+    color: '#000',
+  },
   button: {
-    backgroundColor: 'white',
-    paddingVertical: 10,
+    backgroundColor: '#808000',
+    paddingVertical: 15,
     paddingHorizontal: 20,
-    borderRadius: 100,
-    marginTop: 50,
-    color: 'green',
+    borderRadius: 10,
+    alignItems: 'center',
   },
   buttonText: {
-    color: 'black',
-    fontSize: 16,
+    color: '#fff',
+    fontSize: 18,
     fontWeight: 'bold',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    backgroundColor: '#808000',
+    padding: 5,
+    borderRadius: 25,
   },
 })
 export default DeleteUser

@@ -14,13 +14,12 @@ function AddMember(props) {
   const [user_id, setUserId] = useState('')
   const [chat_id, setChatId] = useState('')
   useEffect(() => {
-    console.log(props, 'chatId')
     setChatId(props.route.params.chat_id)
-    console.log(chat_id, 'chat iddd')
   }, [])
 
   const navigation = useNavigation()
-  const Add = async () => {
+
+  const handleAdd = async () => {
     try {
       const token = await AsyncStorage.getItem('@token')
 
@@ -29,16 +28,18 @@ function AddMember(props) {
         return
       }
 
-      fetch(`http://localhost:3333/api/1.0.0/chat/${chat_id}/user/${user_id}`, {
-        method: 'POST',
-        headers: {
-          'X-Authorization': token,
-        },
-      }).then(async (response) => {
-        const responseBody = await response.text()
-        console.log(responseBody) // log response body
-        // return response.json()
-      })
+      const response = await fetch(
+        `http://localhost:3333/api/1.0.0/chat/${chat_id}/user/${user_id}`,
+        {
+          method: 'POST',
+          headers: {
+            'X-Authorization': token,
+          },
+        }
+      )
+
+      const responseBody = await response.text()
+      console.log(responseBody) // log response body
     } catch (error) {
       console.log(error)
     }
@@ -47,22 +48,24 @@ function AddMember(props) {
   return (
     <View style={styles.container}>
       <View style={styles.inputView}>
-        <Text style={styles.title}>Enter ID </Text>
+        <Text style={styles.title}>Enter User ID</Text>
         <TextInput
-          style={styles.TextInput}
-          placeholder="Enter user ID"
-          placeholderTextColor="#003f5c"
+          style={styles.input}
+          placeholder="Type here..."
+          placeholderTextColor="#ccc"
           onChangeText={(user_id) => setUserId(user_id)}
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={Add}>
-        <Text style={styles.buttonText}>Add</Text>
+
+      <TouchableOpacity style={styles.button} onPress={handleAdd}>
+        <Text style={styles.buttonText}>Add Member</Text>
       </TouchableOpacity>
+
       <TouchableOpacity
-        style={styles.button}
+        style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Ionicons name="ios-backspace-sharp" size={30} color="black" />
+        <Ionicons name="ios-arrow-back" size={24} color="white" />
       </TouchableOpacity>
     </View>
   )
@@ -71,27 +74,46 @@ function AddMember(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#808000',
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingTop: 200,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
   },
+  inputView: {
+    marginBottom: 30,
+  },
+  input: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    fontSize: 16,
+    color: '#000',
+  },
   button: {
-    backgroundColor: 'white',
-    paddingVertical: 10,
+    backgroundColor: '#808000',
+    paddingVertical: 15,
     paddingHorizontal: 20,
-    borderRadius: 100,
-    marginTop: 50,
-    color: 'green',
+    borderRadius: 10,
+    alignItems: 'center',
   },
   buttonText: {
-    color: 'black',
-    fontSize: 16,
+    color: '#fff',
+    fontSize: 18,
     fontWeight: 'bold',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    backgroundColor: '#808000',
+    padding: 5,
+    borderRadius: 25,
   },
 })
 export default AddMember
