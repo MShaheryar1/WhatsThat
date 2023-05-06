@@ -85,10 +85,11 @@ function Chats(props) {
     }
   }
 
-  const handleLongPress = (item) => {
-    console.log('Item long pressed:', item)
+  const handleLongPress = (item, token) => {
+    console.log('Item long pressed:', item, token)
     setModalVisible(true)
     setMessageId(item.message_id) // set the message_id in state
+    setMessage(item.message)
   }
 
   const Deletemessage = async () => {
@@ -121,6 +122,41 @@ function Chats(props) {
       }
     } catch (error) {
       Alert.alert('Error', error.message)
+    }
+  }
+  async function editChatMessage() {
+    try {
+      const token = await AsyncStorage.getItem('@token')
+
+      const response = await fetch(
+        `http://localhost:3333/api/1.0.0/chat/${chatId}/message/${messageId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': token,
+          },
+          body: JSON.stringify({
+            message: message,
+          }),
+        }
+      )
+
+      const result = await response.json()
+
+      if (result.success) {
+        console.log('Chat message updated successfully!')
+
+        // Update the UI with the edited message
+        const editedMessage = result.message
+        // This is an example of how you can update the UI, assuming you have a chat message component
+        // that displays the message and can be updated with new props
+        Chats(messageId, editedMessage)
+      } else {
+        console.error(result.message)
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -177,7 +213,23 @@ function Chats(props) {
             <Ionicons name="close-circle-outline" size={24} color="#000000" />
           </TouchableOpacity>
           <View style={styles.modalContent}>
-            {/* Add your form components here */}
+            {
+              <>
+                <TextInput
+                  style={styles.Edit}
+                  value={message}
+                  onChangeText={(text) => {
+                    setMessage(text)
+                  }}
+                />
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={editChatMessage}
+                >
+                  <Ionicons name="save" size={30} color="black" />
+                </TouchableOpacity>
+              </>
+            }
           </View>
         </View>
       </Modal>
@@ -331,6 +383,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  Edit: {
+    color: 'black',
     fontWeight: 'bold',
     fontSize: 16,
   },
