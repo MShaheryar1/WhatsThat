@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Ionicons } from '@expo/vector-icons'
 
 function Addchat() {
-  const [name, setName] = useState(name)
+  const [name, setName] = useState('')
   const navigation = useNavigation()
 
   const addtochat = async () => {
@@ -24,7 +30,6 @@ function Addchat() {
       })
       const data = await response.json()
       console.log(data, ' new Chat')
-      //   setUser(data)
       await AsyncStorage.setItem('user', data)
     } catch (error) {
       console.error(error)
@@ -35,22 +40,24 @@ function Addchat() {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.title}>Create chat</Text>
-        <TextInput
-          style={styles.input}
-          defaultValue={name}
-          placeholder={'Enter Chat Name'}
-          value={name}
-          onChangeText={(text) => setName(text)}
-        />
+        <Text style={styles.title}>Create a Chat</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Chat Name"
+            value={name}
+            onChangeText={(text) => setName(text)}
+          />
+        </View>
         <TouchableOpacity style={styles.button} onPress={addtochat}>
-          <Text style={styles.buttonText}>create chat</Text>
+          <Text style={styles.buttonText}>Create Chat</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.button}
+          style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Ionicons name="ios-backspace-sharp" size={30} color="black" />
+          <Ionicons name="ios-arrow-back" size={24} color="black" />
+          <Text style={styles.backButtonText}></Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -60,36 +67,50 @@ function Addchat() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#808000',
+    padding: 20,
+  },
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#808000',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 30,
+  },
+  inputContainer: {
+    width: '100%',
     marginBottom: 20,
   },
+  input: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 15,
+    fontSize: 16,
+  },
   button: {
-    backgroundColor: 'white',
-    paddingVertical: 10,
+    backgroundColor: '#000',
+    borderRadius: 10,
+    paddingVertical: 15,
     paddingHorizontal: 20,
-    borderRadius: 5,
     marginTop: 20,
-    color: 'green',
   },
   buttonText: {
-    color: 'black',
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  backButtonText: {
     fontSize: 16,
-    fontWeight: 'bold',
-  },
-  label: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  input: {
-    placeholder: {
-      fontSize: 20,
-    },
+    marginLeft: 5,
   },
 })
 

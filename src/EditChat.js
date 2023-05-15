@@ -181,7 +181,8 @@ const styles = StyleSheet.create({
     margin: 10,
     width: 250,
     fontSize: 16,
-    color: 'white',
+    color: 'black',
+    backgroundColor: 'white',
   },
   button: {
     backgroundColor: 'white',

@@ -18,7 +18,6 @@ function AddContact() {
   const handleAddContact = async () => {
     try {
       const token = await AsyncStorage.getItem('@token')
-      console.log(token, 'print token')
 
       if (!user_id) {
         Alert.alert('Error', 'Please enter user ID')
